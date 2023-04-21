@@ -7,18 +7,28 @@ function App() {
       gridTemplateRows={'50px 1fr 30px'}
       gridTemplateColumns={'1fr'}
       h='100vh'
+      backgroundImage="url('https://chewedup.blast.tv/images/header.png')"
+      backgroundPosition='center'
+      backgroundSize='cover'
+      backgroundRepeat='no-repeat'
+      bgBlendMode='overlay'
+      backgroundColor='#200d19'
       color='#ffffff'
       fontWeight='bold'
     >
-      <GridItem pl='2' bg='#200d19' area={'header'}>
+      <GridItem pl='2' area={'header'}>
         CS:GO Game Match Stats
       </GridItem>
-      <GridItem pl='2' bg='#200d19' area={'main'}>
+      <GridItem pl='2' area={'main'}>
         Main
       </GridItem>
       <GridItem pl='2' bg='#251821' area={'footer'}>
         @{' '}
-        <a href='https://github.com/MTraveller' target='_blank'>
+        <a
+          href='https://github.com/MTraveller'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           MTraveller
         </a>
       </GridItem>
