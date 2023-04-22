@@ -23,7 +23,7 @@ jobs:
           npm install
 
       - name: Lint with eslint
-        run: npm lint
+        run: npm run lint
 
       - name: Run unit test with jest
         run: npm test
