@@ -1,4 +1,6 @@
+import React from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
+import Form from './components/form';
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
         CS:GO Game Match Stats
       </GridItem>
       <GridItem pl='2' area={'main'}>
-        Main
+        <Form />
       </GridItem>
       <GridItem pl='2' bg='#251821' area={'footer'}>
         @{' '}
