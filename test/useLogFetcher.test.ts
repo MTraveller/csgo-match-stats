@@ -7,7 +7,7 @@ describe('fetch log data from api', () => {
 
   test('returns two arrays', async () => {
     const objLength = Object.keys(await data).length;
-    expect(objLength).toHaveLength(2);
+    expect(objLength).toBe(2);
   });
 
   test('logData array contain items', async () => {
@@ -17,6 +17,6 @@ describe('fetch log data from api', () => {
 
   test('playingTeam array has a length of 2', async () => {
     const playingTeamsLength = (await data).playingTeams.length;
-    expect(playingTeamsLength).toHaveLength(2);
+    expect(playingTeamsLength).toBe(2);
   });
 });
