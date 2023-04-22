@@ -2,10 +2,10 @@ name: CI Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
-    
+    branches: ['main']
+
   workflow_dispatch:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
           npm install
 
       - name: Lint with eslint
-        run: eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0
-        
+        run: npm lint
+
       - name: Run unit test with jest
         run: npm test
