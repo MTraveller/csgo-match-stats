@@ -8,7 +8,7 @@ import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { Button } from '@chakra-ui/button';
 import { Box } from '@chakra-ui/layout';
 
-const form = () => {
+function Form() {
   const [input, setInput] = useState('');
 
   const handleInputChange = e => setInput(e.target.value);
@@ -54,6 +54,6 @@ const form = () => {
       </Box>
     </Box>
   );
-};
+}
 
-export default form;
+export default Form;
