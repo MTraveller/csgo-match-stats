@@ -1,6 +1,6 @@
 import { Grid, GridItem } from '@chakra-ui/react';
-import Form from './components/form';
-import NavBar from './components/navBar';
+import Nav from './components/Nav';
+import Match from './components/Match';
 
 function App() {
   return (
@@ -20,12 +20,12 @@ function App() {
       fontWeight='bold'
     >
       <GridItem pl='2' area={'header'}>
-        <NavBar />
+        <Nav />
       </GridItem>
-      <GridItem pl='2' area={'main'}>
-        <Form />
+      <GridItem p='10' area={'main'}>
+        <Match />
       </GridItem>
-      <GridItem pl='2' bg='#251821' area={'footer'}>
+      <GridItem pl='5' bg='#251821' area={'footer'}>
         @{' '}
         <a
           href='https://github.com/MTraveller'

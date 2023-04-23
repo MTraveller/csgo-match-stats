@@ -9,6 +9,7 @@ import { Box } from '@chakra-ui/layout';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Url } from './Match';
 
 const schema = z.object({
   log: z.string().url(),
@@ -16,7 +17,11 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function Form() {
+interface SetUrl {
+  setUrl: React.Dispatch<React.SetStateAction<Url | undefined>>;
+}
+
+const MatchForm = ({ setUrl }: SetUrl) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +29,7 @@ function Form() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    setUrl(data.log);
   };
 
   return (
@@ -60,19 +65,15 @@ function Form() {
               <Box fontStyle='italic'>
                 <p>
                   Log link e.g.
-                  http://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
+                  https://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
                 </p>
               </Box>
             )}
           </FormHelperText>
         </FormControl>
       </form>
-
-      <Box bg='#251821' w='100%' p={8}>
-        Hello World
-      </Box>
     </Box>
   );
-}
+};
 
-export default Form;
+export default MatchForm;

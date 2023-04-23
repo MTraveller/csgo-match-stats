@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Heading } from '@chakra-ui/react';
 
-function NavBar() {
+const Nav = () => {
   return (
     <header>
       <Flex pl='3' alignItems='center'>
@@ -13,6 +13,6 @@ function NavBar() {
       </Flex>
     </header>
   );
-}
+};
 
-export default NavBar;
+export default Nav;
