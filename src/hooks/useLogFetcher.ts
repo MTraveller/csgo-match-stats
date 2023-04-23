@@ -1,11 +1,21 @@
-async function useLogFetcher(url: string) {
-  const matchIdentifier = url.slice(url.lastIndexOf('/') + 1, url.indexOf('.txt'));
-  const playingTeams = matchIdentifier.slice(0, matchIdentifier.indexOf('-')).split('vs');
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
-  const res = await fetch(url);
-  const logData = (await res.text()).split(/[\r\n]+/);
-
-  return { playingTeams, logData }
+export interface Log {
+  url: string;
+  data: string;
 }
+
+const useLogFetcher = (url: string) => {
+  const fetchLogs = () =>
+    axios
+      .get<Log>('https://api.codetabs.com/v1/proxy/?quest=' + url)
+      .then(res => res.data);
+
+  return useQuery<Log, Error>({
+    queryKey: ['logs'],
+    queryFn: fetchLogs,
+  });
+};
 
 export default useLogFetcher;

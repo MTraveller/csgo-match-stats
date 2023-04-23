@@ -16,7 +16,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function Form() {
+const MatchForm = ({ setUrl }: any) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ function Form() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    setUrl(data.log);
   };
 
   return (
@@ -60,19 +60,15 @@ function Form() {
               <Box fontStyle='italic'>
                 <p>
                   Log link e.g.
-                  http://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
+                  https://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
                 </p>
               </Box>
             )}
           </FormHelperText>
         </FormControl>
       </form>
-
-      <Box bg='#251821' w='100%' p={8}>
-        Hello World
-      </Box>
     </Box>
   );
-}
+};
 
-export default Form;
+export default MatchForm;
