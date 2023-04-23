@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import {
   FormControl,
   FormHelperText,
@@ -11,11 +11,15 @@ import { Box } from '@chakra-ui/layout';
 function Form() {
   const [input, setInput] = useState('');
 
-  const handleInputChange = e => setInput(e.target.value);
+  const logRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = e => {
+  const handleInputChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => setInput(e.target.value);
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(e);
+    if (logRef.current !== null) console.log(logRef.current.value);
   };
 
   return (
@@ -25,6 +29,7 @@ function Form() {
           <FormLabel>Match Log URL</FormLabel>
           <InputGroup size='md'>
             <Input
+              ref={logRef}
               type='text'
               focusBorderColor='#fdfe3f'
               value={input}
