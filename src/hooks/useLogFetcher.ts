@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export interface Log {
   url: string;
-  data: string;
+  data?: string;
 }
 
 const useLogFetcher = (url: string) => {

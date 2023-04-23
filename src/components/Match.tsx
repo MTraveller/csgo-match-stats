@@ -4,7 +4,7 @@ import MatchForm from './MatchForm';
 import MatchGameLog from './MatchGameLog';
 
 export interface Url {
-  url: string | undefined;
+  url: string;
 }
 
 const Match = () => {
@@ -15,7 +15,7 @@ const Match = () => {
       <MatchForm setUrl={setUrl} />
 
       <Box bg='#251821' w='100%' p={10}>
-        {url && <MatchGameLog url={url.toString()} />}
+        {url && <MatchGameLog url={url?.toString()} />}
       </Box>
     </>
   );

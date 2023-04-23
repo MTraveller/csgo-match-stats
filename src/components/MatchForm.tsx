@@ -9,6 +9,7 @@ import { Box } from '@chakra-ui/layout';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Url } from './Match';
 
 const schema = z.object({
   log: z.string().url(),
@@ -16,7 +17,11 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const MatchForm = ({ setUrl }: any) => {
+interface SetUrl {
+  setUrl: React.Dispatch<React.SetStateAction<Url | undefined>>;
+}
+
+const MatchForm = ({ setUrl }: SetUrl) => {
   const {
     register,
     handleSubmit,
