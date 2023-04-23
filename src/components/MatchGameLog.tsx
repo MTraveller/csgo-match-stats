@@ -8,7 +8,7 @@ function MatchGameLog({ url }: Log) {
 
   console.log(gameEvents);
 
-  return isLoading ? <h2>Loading...</h2> : gameEvents;
+  return isLoading ? <h2>Loading...</h2> : error ? error : log;
 }
 
 export default MatchGameLog;
