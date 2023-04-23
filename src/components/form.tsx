@@ -1,4 +1,3 @@
-import React, { FormEvent, useRef, useState } from 'react';
 import {
   FormControl,
   FormHelperText,
@@ -7,36 +6,42 @@ import {
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { Button } from '@chakra-ui/button';
 import { Box } from '@chakra-ui/layout';
+import { FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  log: z.string().url(),
+});
+
+type FormData = z.infer<typeof schema>;
 
 function Form() {
-  const [input, setInput] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const logRef = useRef<HTMLInputElement>(null);
-
-  const handleInputChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setInput(e.target.value);
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (logRef.current !== null) console.log(logRef.current.value);
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
   };
 
   return (
     <Box w='100%' p={5}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl marginBottom={10}>
           <FormLabel>Match Log URL</FormLabel>
           <InputGroup size='md'>
             <Input
-              ref={logRef}
+              id='log'
               type='text'
               focusBorderColor='#fdfe3f'
-              value={input}
-              onChange={handleInputChange}
+              {...register('log')}
             />
             <InputRightElement width='6.3rem'>
               <Button
+                isDisabled={!isValid}
                 type='submit'
                 h='1.75rem'
                 size='lg'
@@ -49,7 +54,16 @@ function Form() {
             </InputRightElement>
           </InputGroup>
           <FormHelperText>
-            Enter the CS:GO game match log .txt file
+            {errors.log ? (
+              errors.log.message
+            ) : (
+              <Box fontStyle='italic'>
+                <p>
+                  Log link e.g.
+                  http://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
+                </p>
+              </Box>
+            )}
           </FormHelperText>
         </FormControl>
       </form>
