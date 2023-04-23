@@ -1,6 +1,6 @@
-import React from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
 import Form from './components/form';
+import NavBar from './components/navBar';
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
       gridTemplateRows={'50px 1fr 30px'}
       gridTemplateColumns={'1fr'}
       h='100vh'
+      gap={10}
       backgroundImage="url('https://chewedup.blast.tv/images/header.png')"
       backgroundPosition='center'
       backgroundSize='cover'
@@ -19,7 +20,7 @@ function App() {
       fontWeight='bold'
     >
       <GridItem pl='2' area={'header'}>
-        CS:GO Game Match Stats
+        <NavBar />
       </GridItem>
       <GridItem pl='2' area={'main'}>
         <Form />
