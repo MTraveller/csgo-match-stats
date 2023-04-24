@@ -9,14 +9,8 @@ interface Url {
 function MatchGameLog({ url }: Url) {
   const { data, error, isLoading } = useLogFetcher(url);
   const gameEvents = JSON.stringify(data).split('\\r\\n');
-
-  const teams = processTeams(url);
-  const teamsIsValid = teams.length === 2 ? true : false;
-
+  const teamsIsValid = processTeams(url).length === 2 ? true : false;
   const matchResult = processEvents(gameEvents);
-
-  console.log(teams);
-  console.log(matchResult);
 
   return isLoading ? (
     <h2>Loading...</h2>
@@ -25,7 +19,7 @@ function MatchGameLog({ url }: Url) {
   ) : !teamsIsValid ? (
     <h2>Please enter a valid url with team names and match log!</h2>
   ) : (
-    <h2>Stats</h2>
+    <h2>{matchResult.length}</h2>
   );
 }
 
