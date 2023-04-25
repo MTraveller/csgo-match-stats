@@ -27,3 +27,6 @@ jobs:
 
       - name: Run unit test with jest
         run: npm test
+      
+      - name: Run vite build test
+        run: npm run build
