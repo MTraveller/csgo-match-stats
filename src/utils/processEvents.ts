@@ -1,5 +1,6 @@
 import processMapTeams from './processMapTeams';
 import processPlayers from './processPlayers';
+import processRounds from './processRounds';
 
 const enum Event {
   start = 'Match_Start',
@@ -7,7 +8,8 @@ const enum Event {
   ct = 'CT',
   terror = 'TERRORIST',
   assigned = '<Unassigned> to',
-  round = 'Round_Start',
+  roundStart = 'Round_Start',
+  roundEnd = 'Round_End',
   attack = 'attacked',
   kill = 'killed',
 }
@@ -18,10 +20,15 @@ function processEvents(matchLog: string[]) {
   );
   const players = processPlayers(matchLog, Event.assigned);
   const playingTeams = processMapTeams(matchStart);
+  const playingRounds = processRounds(
+    matchStart,
+    Event.roundStart,
+    Event.roundEnd
+  );
 
   console.log(playingTeams);
   console.log(players);
-  console.log(matchStart[1]);
+  console.log(playingRounds);
 
   return [1, 2, 3];
 }

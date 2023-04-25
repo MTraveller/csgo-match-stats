@@ -4,7 +4,7 @@ function processMapTeams(matchStart: string[]) {
   const teamCT = matchStart[1]?.match(/":\s(.*)/)?.at(1);
   const teamTerrorist = matchStart[2]?.match(/":\s(.*)/)?.at(1);
 
-  mapTeams.push(matchMap, teamCT, teamTerrorist);
+  mapTeams.push(matchMap, { CT: teamCT }, { TERRORIST: teamTerrorist });
   return mapTeams;
 }
 
