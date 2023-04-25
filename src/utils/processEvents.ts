@@ -1,3 +1,4 @@
+import processScores from './processScores';
 import processMapTeams from './processMapTeams';
 import processPlayers from './processPlayers';
 import processRounds from './processRounds';
@@ -25,10 +26,16 @@ function processEvents(matchLog: string[]) {
     Event.roundStart,
     Event.roundEnd
   );
+  const roundsAttacks = processScores(
+    playingRounds,
+    players,
+    Event.attack,
+    Event.kill
+  );
 
   console.log(playingTeams);
-  console.log(players);
   console.log(playingRounds);
+  console.log(roundsAttacks);
 
   return [1, 2, 3];
 }
