@@ -1,14 +1,26 @@
 import useLogFetcher from '../hooks/useLogFetcher';
-import { Log } from '../hooks/useLogFetcher';
+import processEvents from '../utils/processEvents';
+import processTeams from '../utils/processTeams';
 
-function MatchGameLog({ url }: Log) {
-  const { data: log, error, isLoading } = useLogFetcher(url);
+interface Url {
+  url: string;
+}
 
-  const gameEvents = log?.split(/[\r\n]+/);
+function MatchGameLog({ url }: Url) {
+  const { data, error, isLoading } = useLogFetcher(url);
+  const gameEvents = JSON.stringify(data).split('\\r\\n');
+  const teamsIsValid = processTeams(url).length === 2 ? true : false;
+  const matchResult = processEvents(gameEvents);
 
-  console.log(gameEvents);
-
-  return isLoading ? <h2>Loading...</h2> : error ? error : log;
+  return isLoading ? (
+    <h2>Loading...</h2>
+  ) : error ? (
+    <h2>{error.message}</h2>
+  ) : !teamsIsValid ? (
+    <h2>Please enter a valid url with team names and match log!</h2>
+  ) : (
+    <h2>{matchResult.length}</h2>
+  );
 }
 
 export default MatchGameLog;
