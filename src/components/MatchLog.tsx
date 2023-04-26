@@ -1,12 +1,13 @@
 import useLogFetcher from '../hooks/useLogFetcher';
 import processEvents from '../utils/processEvents';
 import processUrlTeams from '../utils/processUrlTeams';
+import MatchResult from './MatchResult';
 
 interface Url {
   url: string;
 }
 
-function MatchGameLog({ url }: Url) {
+function MatchLog({ url }: Url) {
   const { data, error, isLoading } = useLogFetcher(url);
   const gameEvents = JSON.stringify(data).split('\\r\\n');
   const teamsIsValid = processUrlTeams(url).length === 2 ? true : false;
@@ -19,8 +20,11 @@ function MatchGameLog({ url }: Url) {
   ) : !teamsIsValid ? (
     <h2>Please enter a valid url with team names and match log!</h2>
   ) : (
-    <h2>{matchResult.length}</h2>
+    <MatchResult
+      rounds={matchResult.rounds}
+      performance={matchResult.performance}
+    />
   );
 }
 
-export default MatchGameLog;
+export default MatchLog;

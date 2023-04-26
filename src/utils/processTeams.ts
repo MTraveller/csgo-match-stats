@@ -17,7 +17,7 @@ function processTeams(logs: Logs[], statuses: Statuses[]) {
     });
   });
 
-  return { logs, Statuses: newStatus };
+  return { logs, statuses: newStatus };
 }
 
 export default processTeams;

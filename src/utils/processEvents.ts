@@ -24,10 +24,7 @@ function processEvents(matchLog: string[]) {
   const playingRounds = processRounds(matchStart);
   const roundsAttacks = processScores(playingRounds, players);
 
-  console.log(playingRounds);
-  console.log('RoundsAttacks', roundsAttacks);
-
-  return [1, 2, 3];
+  return { rounds: playingRounds, performance: roundsAttacks };
 }
 
 export default processEvents;
