@@ -2,27 +2,63 @@ import timeDiffCalc from './timeDiffCalc';
 
 export interface Rounds {
   roundLog: string[];
-  roundTime: object[];
+  roundStatuses: object[];
 }
 
-function processRounds(matchStart: string[], start: string, end: string) {
+interface Statuses {
+  map: string;
+  round: string;
+  roundScore: string;
+  roundTime?: object;
+}
+
+function processRounds(
+  matchStart: string[],
+  start: string,
+  end: string,
+  played: string
+) {
   const rounds: Rounds[] = [];
 
-  const matchesStartIdx = matchStart
+  const roundsIndexes = matchStart
     .map((e, i) => {
       if (e.includes(start)) return i;
-    })
-    .filter(item => Number(item));
-
-  const matchesEndIdx = matchStart
-    .map((e, i) => {
       if (e.includes(end)) return i;
     })
     .filter(item => Number(item));
 
-  for (let i = 0; i < 22; i++) {
-    const sliceFrom = matchesStartIdx.shift();
-    const sliceTo = matchesEndIdx.shift();
+  let roundStatuses: Statuses[] = [];
+
+  matchStart.forEach(e => {
+    let matchMap = '';
+    let roundsPlayed = '';
+    let roundScore = '';
+
+    if (e.includes(played)) {
+      const isPlayed = e.match(/Played:\s(.*)/)?.at(1);
+      const isScore = e.match(/Score:\s(.*?)\s/)?.at(1);
+      const isMap = e.match(/\\"(\w+)\\"/)?.at(1);
+
+      matchMap = isMap ? isMap : '';
+      roundsPlayed = isPlayed ? isPlayed : '';
+      roundScore = isScore ? isScore : '';
+    }
+
+    if (roundsPlayed !== '0' && roundsPlayed && roundScore)
+      roundStatuses.push({
+        map: matchMap,
+        round: roundsPlayed,
+        roundScore,
+      });
+  });
+
+  roundStatuses = roundStatuses.filter((_, idx) => idx % 2 === 0);
+
+  const roundsPlayed = roundsIndexes.length / 2;
+
+  for (let i = 0; i < roundsPlayed - 1; i++) {
+    const sliceFrom = roundsIndexes.shift();
+    const sliceTo = roundsIndexes.shift();
 
     let startTime = '';
     let finishTime = '';
@@ -39,12 +75,14 @@ function processRounds(matchStart: string[], start: string, end: string) {
       }
     });
 
+    roundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
+
     rounds.push({
-      roundTime: timeDiffCalc(startTime, finishTime),
       roundLog: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
+      roundStatuses,
     });
 
-    if (matchesStartIdx.length === 1) matchesStartIdx.pop();
+    if (roundsIndexes.length === 1) roundsIndexes.pop();
   }
 
   return rounds;

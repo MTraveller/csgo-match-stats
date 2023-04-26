@@ -29,7 +29,9 @@ function timeDiffCalc(startTime: string, finishTime: string): object[] {
       ? calcMin + 1
       : calcMin;
 
-  return [{ minutes, seconds }];
+  const calcRound: any = { minutes, seconds };
+
+  return calcRound;
 }
 
 export default timeDiffCalc;
