@@ -1,29 +1,30 @@
 import timeDiffCalc from './timeDiffCalc';
+import { EventLog } from './processEvents';
+import processTeams from './processTeams';
 
-export interface Rounds {
-  roundLog: string[];
-  roundStatuses: object[];
+interface Logs {
+  log: string[];
 }
 
-interface Statuses {
+export interface Statuses {
   map: string;
+  ct?: string;
+  tr?: string;
   round: string;
   roundScore: string;
   roundTime?: object;
 }
 
-function processRounds(
-  matchStart: string[],
-  start: string,
-  end: string,
-  played: string
-) {
-  const rounds: Rounds[] = [];
+export interface Rounds {
+  logs: object[];
+  roundStatuses?: object[];
+}
 
+function processRounds(matchStart: string[]) {
   const roundsIndexes = matchStart
     .map((e, i) => {
-      if (e.includes(start)) return i;
-      if (e.includes(end)) return i;
+      if (e.includes(EventLog.roundStart)) return i;
+      if (e.includes(EventLog.roundEnd)) return i;
     })
     .filter(item => Number(item));
 
@@ -34,7 +35,7 @@ function processRounds(
     let roundsPlayed = '';
     let roundScore = '';
 
-    if (e.includes(played)) {
+    if (e.includes(EventLog.roundsPlayed)) {
       const isPlayed = e.match(/Played:\s(.*)/)?.at(1);
       const isScore = e.match(/Score:\s(.*?)\s/)?.at(1);
       const isMap = e.match(/\\"(\w+)\\"/)?.at(1);
@@ -55,6 +56,8 @@ function processRounds(
   roundStatuses = roundStatuses.filter((_, idx) => idx % 2 === 0);
 
   const roundsPlayed = roundsIndexes.length / 2;
+
+  const logs: Logs[] = [];
 
   for (let i = 0; i < roundsPlayed - 1; i++) {
     const sliceFrom = roundsIndexes.shift();
@@ -77,15 +80,16 @@ function processRounds(
 
     roundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
 
-    rounds.push({
-      roundLog: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
-      roundStatuses,
+    logs.push({
+      log: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
     });
 
     if (roundsIndexes.length === 1) roundsIndexes.pop();
   }
 
-  return rounds;
+  const roundsResult = processTeams(logs, roundStatuses);
+
+  return roundsResult;
 }
 
 export default processRounds;

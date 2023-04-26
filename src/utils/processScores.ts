@@ -1,24 +1,27 @@
+import { EventLog } from './processEvents';
 import { Players } from './processPlayers';
 import { Rounds } from './processRounds';
 
-function processScores(
-  rounds: Rounds[],
-  players: Players[],
-  attack: string,
-  kill: string
-) {
+interface Logs {
+  log?: string[];
+}
+
+function processScores(rounds: Rounds, players: Players[]) {
   const playerAttacks: object[] = [];
   const playerKills: object[] = [];
 
   players.forEach(pObj => {
-    rounds.forEach((rObj, rIdx) => {
-      rObj.roundLog.forEach((e: string) => {
+    rounds.logs.forEach((rObj: Logs, rIdx: number) => {
+      rObj.log?.forEach(e => {
         const round = rIdx + 1;
         const player = pObj.player;
         const attacker = e.match(/:\s\\"(.*?)</)?.at(1);
-        const isAttack = e.includes(attack);
+        const isAttack = e.includes(EventLog.attack);
 
-        if (attacker === pObj.player && (isAttack || e.includes(kill))) {
+        if (
+          attacker === pObj.player &&
+          (isAttack || e.includes(EventLog.kill))
+        ) {
           const damage = Number(e.match(/damage\s\\"(.*?)\\"/)?.at(1));
           const killed = e.match(/killed\s\\"(.*?)<\d\d>/)?.at(1);
           isAttack

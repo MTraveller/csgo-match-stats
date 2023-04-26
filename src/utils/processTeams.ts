@@ -1,13 +1,23 @@
-function processTeams(url: string) {
-  const matchIdentifier = url.slice(
-    url.lastIndexOf('/') + 1,
-    url.indexOf('.txt')
-  );
-  const playingTeams = matchIdentifier
-    .slice(0, matchIdentifier.indexOf('-'))
-    .split('vs');
+import { EventLog } from './processEvents';
+import { Statuses } from './processRounds';
 
-  return playingTeams;
+interface Logs {
+  log?: string[];
+}
+
+function processTeams(logs: Logs[], statuses: Statuses[]) {
+  const newStatus = { ...statuses };
+
+  logs.forEach((round, idx) => {
+    round.log?.forEach(e => {
+      if (e.includes(EventLog.ct))
+        newStatus[idx].ct = e.match(/":\s(.*)/)?.at(1);
+      if (e.includes(EventLog.tr))
+        newStatus[idx].tr = e.match(/":\s(.*)/)?.at(1);
+    });
+  });
+
+  return { logs, Statuses: newStatus };
 }
 
 export default processTeams;

@@ -1,6 +1,6 @@
 import useLogFetcher from '../hooks/useLogFetcher';
 import processEvents from '../utils/processEvents';
-import processTeams from '../utils/processTeams';
+import processUrlTeams from '../utils/processUrlTeams';
 
 interface Url {
   url: string;
@@ -9,7 +9,7 @@ interface Url {
 function MatchGameLog({ url }: Url) {
   const { data, error, isLoading } = useLogFetcher(url);
   const gameEvents = JSON.stringify(data).split('\\r\\n');
-  const teamsIsValid = processTeams(url).length === 2 ? true : false;
+  const teamsIsValid = processUrlTeams(url).length === 2 ? true : false;
   const matchResult = processEvents(gameEvents);
 
   return isLoading ? (
