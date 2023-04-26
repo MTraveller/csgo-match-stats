@@ -32,7 +32,7 @@ const MatchForm = ({ setUrl }: SetUrl) => {
   };
 
   return (
-    <Box w='100%' p={5}>
+    <Box w='full'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl marginBottom={10}>
           <FormLabel>Match Log URL</FormLabel>

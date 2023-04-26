@@ -1,4 +1,14 @@
-import { Box, Circle, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Circle,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Text,
+} from '@chakra-ui/react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 interface MatchResults {
   rounds: LogStatusObj;
@@ -24,22 +34,34 @@ function MatchResult({ rounds, performance }: MatchResults) {
   console.log(rounds.statuses);
 
   return (
-    <>
-      <Box w='100%' h='50px' mb='6' p='0'>
-        <Flex color='white' height='12' gap={3}>
-          {Object.values(rounds.statuses).map((obj: StatusObj) => (
-            <Circle
-              key={obj.round}
-              minWidth='50px'
-              bg='#200d19'
-              border='1px'
-              borderColor='#fdfe3f'
-              as='button'
-            >
-              <Text color='#fdfe3f'>{obj.round}</Text>
-            </Circle>
-          ))}
-        </Flex>
+    <Box w='full'>
+      <Box minH='60px' mb='6' p='0'>
+        <HStack
+          justifyContent='space-between'
+          alignItems='center'
+          overflow='hidden'
+        >
+          <Button colorScheme='black' size='sm'>
+            <ArrowLeftIcon boxSize={4} color='#fdfe3f' />
+          </Button>
+          <Flex color='white' gap={3} overflow='scroll'>
+            {Object.values(rounds.statuses).map((obj: StatusObj) => (
+              <Circle
+                key={obj.round}
+                minW={6}
+                bg='#000000'
+                border='1px'
+                borderColor='#fdfe3f'
+                as='button'
+              >
+                <Text color='#fdfe3f'>{obj.round}</Text>
+              </Circle>
+            ))}
+          </Flex>
+          <Button colorScheme='black' size='sm'>
+            <ArrowRightIcon boxSize={4} color='#fdfe3f' />
+          </Button>
+        </HStack>
       </Box>
       <Grid
         h='300px'
@@ -52,7 +74,7 @@ function MatchResult({ rounds, performance }: MatchResults) {
         <GridItem colSpan={2} bg='#000000' />
         <GridItem colSpan={4} bg='#200d19' />
       </Grid>
-    </>
+    </Box>
   );
 }
 

@@ -10,7 +10,7 @@ const Match = () => {
     <>
       <MatchForm setUrl={setUrl} />
 
-      <Box bg='#251821' w='100%' p={10}>
+      <Box w='full' bg='#251821' p={10}>
         {url ? (
           <MatchLog url={url} />
         ) : (
