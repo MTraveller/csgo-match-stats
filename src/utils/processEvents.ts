@@ -22,9 +22,9 @@ function processEvents(matchLog: string[]) {
   );
   const players = processPlayers(matchLog, EventLog.assigned);
   const playingRounds = processRounds(matchStart);
-  const roundsAttacks = processScores(playingRounds, players);
+  const roundsPlayersStats = processScores(playingRounds, players);
 
-  return { rounds: playingRounds, performance: roundsAttacks };
+  return { rounds: playingRounds, performance: roundsPlayersStats };
 }
 
 export default processEvents;

@@ -52,7 +52,7 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
         >
           <ArrowRightIcon
             boxSize={4}
-            color={round === 0 ? '#200d19' : '#fdfe3f'}
+            color={round === roundsStatus.length - 1 ? '#200d19' : '#fdfe3f'}
           />
         </Button>
       </Box>

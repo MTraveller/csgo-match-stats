@@ -1,13 +1,17 @@
-import { Box, Grid, GridItem, Heading } from '@chakra-ui/react';
+import { Box, Center, Grid, GridItem, Heading } from '@chakra-ui/react';
 import RoundPicker from './MatchResult/RoundPicker';
 import { useState } from 'react';
+import TopThreeCT from './MatchResult/TopThreeCT';
+import TopThreeTR from './MatchResult/TopThreeTR';
+// import processPerformance from '../utils/processPerformance';
+import { RoundsPlayersStats } from '../utils/processScores';
 
 interface MatchResults {
   rounds: {
     logs: object[];
     statuses: object[];
   };
-  performance: object[];
+  performance: RoundsPlayersStats;
 }
 
 interface StatusObj {
@@ -21,11 +25,13 @@ interface StatusObj {
   };
 }
 
-function MatchResult({ rounds, performance }: MatchResults) {
+function MatchResult({ rounds }: MatchResults) {
   const [round, setRound] = useState(0);
   const statuses = rounds.statuses as unknown as StatusObj;
 
-  console.log(performance);
+  // const { CT, TR } = processPerformance(performance[0]);
+
+  // console.log(CT, TR);
 
   return (
     <Box>
@@ -38,13 +44,14 @@ function MatchResult({ rounds, performance }: MatchResults) {
         templateColumns='repeat(5, 1fr)'
         gap={4}
       >
-        <GridItem rowSpan={2} colSpan={1} bg='#200d19'>
+        <GridItem rowSpan={2} colSpan={1} bg='#fdfe3f' borderLeftRadius='10'>
           <Box
             display='flex'
             flexDir='column'
             h='full'
             alignItems='center'
             justifyContent='center'
+            color='black'
             gap={5}
           >
             <Heading>{statuses[round]?.map}</Heading>
@@ -90,10 +97,14 @@ function MatchResult({ rounds, performance }: MatchResults) {
           </Box>
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
-          3
+          <Center h='full'>
+            <TopThreeCT />
+          </Center>
         </GridItem>
-        <GridItem colSpan={2} bg='#200d19'>
-          4
+        <GridItem colSpan={2} bg='#000000'>
+          <Center h='full'>
+            <TopThreeTR />
+          </Center>
         </GridItem>
       </Grid>
     </Box>
