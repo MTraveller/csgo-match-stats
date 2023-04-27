@@ -18,7 +18,7 @@ function App() {
       overflow='hidden'
       color='#ffffff'
       w='100wv'
-      h='100vh'
+      minH='100vh'
       gap={10}
     >
       <GridItem pl='2' area={'header'}>

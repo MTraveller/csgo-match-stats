@@ -12,7 +12,7 @@ export interface Statuses {
   tr?: string;
   round: string;
   roundScore: string;
-  roundTime?: object;
+  roundTime: object;
 }
 
 export interface Rounds {
@@ -50,6 +50,7 @@ function processRounds(matchStart: string[]) {
         map: matchMap,
         round: roundsPlayed,
         roundScore,
+        roundTime: {},
       });
   });
 

@@ -1,78 +1,104 @@
-import {
-  Box,
-  Button,
-  Circle,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Text,
-} from '@chakra-ui/react';
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
+import { Box, Grid, GridItem, Heading } from '@chakra-ui/react';
+import RoundPicker from './MatchResult/RoundPicker';
+import { useState } from 'react';
 
 interface MatchResults {
-  rounds: LogStatusObj;
+  rounds: {
+    logs: object[];
+    statuses: object[];
+  };
   performance: object[];
 }
 
-interface LogStatusObj {
-  logs: object[];
-  statuses: StatusObj[] | object;
-}
-
 interface StatusObj {
-  map: string;
-  round: string;
-  roundScore: string;
-  roundTime: { minutes: number; seconds: number };
-  ct: string;
-  tr: string;
+  [x: number]: {
+    map: string;
+    round: string;
+    roundScore: string;
+    roundTime: { minutes: number; seconds: number };
+    ct: string;
+    tr: string;
+  };
 }
 
 function MatchResult({ rounds, performance }: MatchResults) {
+  const [round, setRound] = useState(21);
+  const statuses = rounds.statuses as unknown as StatusObj;
+
+  console.log('statuses::', statuses);
+
   console.log(rounds, performance);
   console.log(rounds.statuses);
+  console.log(round);
 
   return (
-    <Box w='full'>
+    <Box>
       <Box minH='60px' mb='6' p='0'>
-        <HStack
-          justifyContent='space-between'
-          alignItems='center'
-          overflow='hidden'
-        >
-          <Button colorScheme='black' size='sm'>
-            <ArrowLeftIcon boxSize={4} color='#fdfe3f' />
-          </Button>
-          <Flex color='white' gap={3} overflow='scroll'>
-            {Object.values(rounds.statuses).map((obj: StatusObj) => (
-              <Circle
-                key={obj.round}
-                minW={6}
-                bg='#000000'
-                border='1px'
-                borderColor='#fdfe3f'
-                as='button'
-              >
-                <Text color='#fdfe3f'>{obj.round}</Text>
-              </Circle>
-            ))}
-          </Flex>
-          <Button colorScheme='black' size='sm'>
-            <ArrowRightIcon boxSize={4} color='#fdfe3f' />
-          </Button>
-        </HStack>
+        <RoundPicker statuses={statuses} round={round} setRound={setRound} />
       </Box>
       <Grid
-        h='300px'
+        h='600px'
         templateRows='repeat(2, 1fr)'
         templateColumns='repeat(5, 1fr)'
         gap={4}
       >
-        <GridItem rowSpan={2} colSpan={1} bg='#200d19' />
-        <GridItem colSpan={2} bg='#000000' />
-        <GridItem colSpan={2} bg='#000000' />
-        <GridItem colSpan={4} bg='#200d19' />
+        <GridItem rowSpan={2} colSpan={1} bg='#200d19'>
+          <Box
+            display='flex'
+            flexDir='column'
+            h='full'
+            alignItems='center'
+            justifyContent='center'
+            gap={5}
+          >
+            <Heading>{statuses[round]?.map}</Heading>
+            <Heading>Round: {round + 1}</Heading>
+            <Heading>Took: </Heading>
+            <Heading size='lg'>
+              {statuses[round]?.roundTime.minutes > 0 &&
+                `${statuses[round]?.roundTime.minutes} Mins`}{' '}
+              {statuses[round]?.roundTime.seconds > 0 &&
+                `${statuses[round]?.roundTime.seconds} Secs`}
+            </Heading>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={4} bg='#000000'>
+          <Box
+            h='full'
+            display='flex'
+            flexDir='row'
+            justifyContent='space-around'
+            alignItems='center'
+          >
+            <Box display='flex' flexDir='column' alignItems='center' gap={5}>
+              <Heading>Counter Terrorist:</Heading>
+              <Heading>{statuses[round]?.ct}</Heading>
+            </Box>
+            <Box
+              w='120px'
+              h='80px'
+              display='flex'
+              flexDir='column'
+              justifyContent='center'
+              alignItems='center'
+              bgColor='#fdfe3f'
+              borderRadius='full'
+              gap={5}
+            >
+              <Heading color='black'>{statuses[round]?.roundScore}</Heading>
+            </Box>
+            <Box display='flex' flexDir='column' alignItems='center' gap={5}>
+              <Heading>Terrorist:</Heading>
+              <Heading>{statuses[round]?.tr}</Heading>
+            </Box>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={2} bg='#000000'>
+          3
+        </GridItem>
+        <GridItem colSpan={2} bg='#200d19'>
+          4
+        </GridItem>
       </Grid>
     </Box>
   );
