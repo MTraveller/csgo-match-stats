@@ -22,14 +22,10 @@ interface StatusObj {
 }
 
 function MatchResult({ rounds, performance }: MatchResults) {
-  const [round, setRound] = useState(21);
+  const [round, setRound] = useState(0);
   const statuses = rounds.statuses as unknown as StatusObj;
 
-  console.log('statuses::', statuses);
-
-  console.log(rounds, performance);
-  console.log(rounds.statuses);
-  console.log(round);
+  console.log(performance);
 
   return (
     <Box>

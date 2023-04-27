@@ -12,6 +12,8 @@ interface Round {
 }
 
 function RoundPicker({ statuses, round, setRound }: Rounds) {
+  const roundsStatus = Object.values(statuses);
+
   return (
     <Flex justifyContent='space-between'>
       <Box display='flex' flex='1' justifyContent='start'>
@@ -20,12 +22,15 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
           size='sm'
           onClick={() => round > 0 && setRound(round - 1)}
         >
-          <ArrowLeftIcon boxSize={4} color='#fdfe3f' />
+          <ArrowLeftIcon
+            boxSize={4}
+            color={round === 0 ? '#200d19' : '#fdfe3f'}
+          />
         </Button>
       </Box>
       <Box display='flex' flex='6' flexDirection='row' gap={3}>
         {statuses &&
-          Object.values(statuses).map((obj: Round) => (
+          roundsStatus.map((obj: Round) => (
             <Circle
               key={obj.round}
               minW={8}
@@ -43,9 +48,12 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
         <Button
           colorScheme='black'
           size='sm'
-          onClick={() => round < 21 && setRound(round + 1)}
+          onClick={() => round < roundsStatus.length - 1 && setRound(round + 1)}
         >
-          <ArrowRightIcon boxSize={4} color='#fdfe3f' />
+          <ArrowRightIcon
+            boxSize={4}
+            color={round === 0 ? '#200d19' : '#fdfe3f'}
+          />
         </Button>
       </Box>
     </Flex>
