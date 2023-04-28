@@ -5,13 +5,13 @@ import {
 } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { Button } from '@chakra-ui/button';
-import { Box } from '@chakra-ui/layout';
+import { Box, Text } from '@chakra-ui/layout';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
-  log: z.string().url(),
+  log: z.string().url().endsWith('.txt', { message: 'URL must end with .txt' }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -28,7 +28,7 @@ const MatchForm = ({ setUrl }: SetUrl) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    setUrl(data.log);
+    if (isValid && !errors.log) return setUrl(data.log);
   };
 
   return (
@@ -58,16 +58,16 @@ const MatchForm = ({ setUrl }: SetUrl) => {
             </InputRightElement>
           </InputGroup>
           <FormHelperText>
-            {errors.log ? (
-              errors.log.message
-            ) : (
-              <Box fontStyle='italic'>
-                <p>
+            <Box color='whiteAlpha.600' fontSize='md' fontStyle='italic'>
+              {errors.log ? (
+                <Text>errors.log.message</Text>
+              ) : (
+                <Text>
                   Log link e.g.
                   https://blast-recruiting.s3.eu-central-1.amazonaws.com/NAVIvsVitaGF-Nuke.txt
-                </p>
-              </Box>
-            )}
+                </Text>
+              )}
+            </Box>
           </FormHelperText>
         </FormControl>
       </form>
