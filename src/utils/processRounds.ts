@@ -1,28 +1,68 @@
 import timeDiffCalc from './timeDiffCalc';
+import { EventLog } from './processEvents';
+import processTeams from './processTeams';
 
-export interface Rounds {
-  roundLog: string[];
-  roundTime: object[];
+interface Logs {
+  log: string[];
 }
 
-function processRounds(matchStart: string[], start: string, end: string) {
-  const rounds: Rounds[] = [];
+export interface Statuses {
+  map: string;
+  ct?: string;
+  tr?: string;
+  round: string;
+  roundScore: string;
+  roundTime: object;
+}
 
-  const matchesStartIdx = matchStart
+export interface Rounds {
+  logs: object[];
+  roundStatuses?: object[];
+}
+
+function processRounds(matchStart: string[]) {
+  const roundsIndexes = matchStart
     .map((e, i) => {
-      if (e.includes(start)) return i;
+      if (e.includes(EventLog.roundStart)) return i;
+      if (e.includes(EventLog.roundEnd)) return i;
     })
     .filter(item => Number(item));
 
-  const matchesEndIdx = matchStart
-    .map((e, i) => {
-      if (e.includes(end)) return i;
-    })
-    .filter(item => Number(item));
+  let roundStatuses: Statuses[] = [];
 
-  for (let i = 0; i < 22; i++) {
-    const sliceFrom = matchesStartIdx.shift();
-    const sliceTo = matchesEndIdx.shift();
+  matchStart.forEach(e => {
+    let matchMap = '';
+    let roundsPlayed = '';
+    let roundScore = '';
+
+    if (e.includes(EventLog.roundsPlayed)) {
+      const isPlayed = e.match(/Played:\s(.*)/)?.at(1);
+      const isScore = e.match(/Score:\s(.*?)\s/)?.at(1);
+      const isMap = e.match(/\\"(\w+)\\"/)?.at(1);
+
+      matchMap = isMap ? isMap : '';
+      roundsPlayed = isPlayed ? isPlayed : '';
+      roundScore = isScore ? isScore : '';
+    }
+
+    if (roundsPlayed !== '0' && roundsPlayed && roundScore)
+      roundStatuses.push({
+        map: matchMap,
+        round: roundsPlayed,
+        roundScore,
+        roundTime: {},
+      });
+  });
+
+  roundStatuses = roundStatuses.filter((_, idx) => idx % 2 === 0);
+
+  const roundsPlayed = roundsIndexes.length / 2;
+
+  const logs: Logs[] = [];
+
+  for (let i = 0; i < roundsPlayed - 1; i++) {
+    const sliceFrom = roundsIndexes.shift();
+    const sliceTo = roundsIndexes.shift();
 
     let startTime = '';
     let finishTime = '';
@@ -39,15 +79,18 @@ function processRounds(matchStart: string[], start: string, end: string) {
       }
     });
 
-    rounds.push({
-      roundTime: timeDiffCalc(startTime, finishTime),
-      roundLog: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
+    roundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
+
+    logs.push({
+      log: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
     });
 
-    if (matchesStartIdx.length === 1) matchesStartIdx.pop();
+    if (roundsIndexes.length === 1) roundsIndexes.pop();
   }
 
-  return rounds;
+  const roundsResult = processTeams(logs, roundStatuses);
+
+  return roundsResult;
 }
 
 export default processRounds;

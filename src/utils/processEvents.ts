@@ -1,43 +1,30 @@
 import processScores from './processScores';
-import processMapTeams from './processMapTeams';
 import processPlayers from './processPlayers';
 import processRounds from './processRounds';
 
-const enum Event {
+export const enum EventLog {
   start = 'Match_Start',
   status = 'MatchStatus',
-  ct = 'CT',
-  terror = 'TERRORIST',
+  map = 'on map',
+  ct = 'Team playing \\"CT\\"',
+  tr = 'Team playing \\"TERRORIST\\"',
   assigned = '<Unassigned> to',
   roundStart = 'Round_Start',
   roundEnd = 'Round_End',
+  roundsPlayed = 'RoundsPlayed',
   attack = 'attacked',
   kill = 'killed',
 }
 
 function processEvents(matchLog: string[]) {
   const matchStart = matchLog.slice(
-    matchLog.findLastIndex(e => e.includes(Event.start))
+    matchLog.findLastIndex(e => e.includes(EventLog.start))
   );
-  const players = processPlayers(matchLog, Event.assigned);
-  const playingTeams = processMapTeams(matchStart);
-  const playingRounds = processRounds(
-    matchStart,
-    Event.roundStart,
-    Event.roundEnd
-  );
-  const roundsAttacks = processScores(
-    playingRounds,
-    players,
-    Event.attack,
-    Event.kill
-  );
+  const players = processPlayers(matchLog, EventLog.assigned);
+  const playingRounds = processRounds(matchStart);
+  const roundsPlayersStats = processScores(playingRounds, players);
 
-  console.log(playingTeams);
-  console.log(playingRounds);
-  console.log(roundsAttacks);
-
-  return [1, 2, 3];
+  return { rounds: playingRounds, performance: roundsPlayersStats };
 }
 
 export default processEvents;
