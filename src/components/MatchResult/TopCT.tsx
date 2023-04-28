@@ -1,7 +1,7 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 
 interface TopPlayers {
-  topCTPlayer: [string, number, number];
+  topCTPlayer: (string | number)[];
 }
 
 function TopCT({ topCTPlayer }: TopPlayers) {

@@ -1,11 +1,12 @@
 function processUrlTeams(url: string) {
-  const matchIdentifier = url.slice(
-    url.lastIndexOf('/') + 1,
-    url.indexOf('.txt')
-  );
-  const playingTeams = matchIdentifier
-    .slice(0, matchIdentifier.indexOf('-'))
-    .split('vs');
+  const startIdx = url.lastIndexOf('/') + 1;
+  const endIdx = url.indexOf('.txt');
+
+  const matchIdentifier = url
+    .substring(startIdx, endIdx)
+    .replace(/-[A-Za-z0-9]+$/, '');
+
+  const playingTeams = matchIdentifier.split('vs');
 
   return playingTeams;
 }

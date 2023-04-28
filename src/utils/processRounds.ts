@@ -30,7 +30,7 @@ function processRounds(matchStart: string[]) {
 
   let roundStatuses: Statuses[] = [];
 
-  matchStart.forEach(e => {
+  for (const e of matchStart) {
     let matchMap = '';
     let roundsPlayed = '';
     let roundScore = '';
@@ -52,7 +52,7 @@ function processRounds(matchStart: string[]) {
         roundScore,
         roundTime: {},
       });
-  });
+  }
 
   roundStatuses = roundStatuses.filter((_, idx) => idx % 2 === 0);
 
@@ -66,7 +66,8 @@ function processRounds(matchStart: string[]) {
 
     let startTime = '';
     let finishTime = '';
-    matchStart.forEach((e, idx) => {
+
+    for (const [idx, e] of matchStart.entries()) {
       const idxFrom = idx === sliceFrom;
       const idxTo = idx === sliceTo;
       if (idxFrom || idxTo) {
@@ -77,7 +78,7 @@ function processRounds(matchStart: string[]) {
           finishTime = time ? time : '';
         }
       }
-    });
+    }
 
     roundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
 
