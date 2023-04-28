@@ -2,8 +2,8 @@ import { EventLog } from './processEvents';
 import { Players } from './processPlayers';
 import { Rounds } from './processRounds';
 
-interface Logs {
-  log?: string[];
+interface Logs extends IterableIterator<[number, Logs]> {
+  log: string[];
 }
 
 export interface RoundsPlayersStats {
@@ -20,35 +20,37 @@ export interface RoundsPlayersStats {
 function processScores(rounds: Rounds, players: Players[]) {
   const roundsPlayerStats: RoundsPlayersStats = {};
 
-  players.forEach(pObj => {
-    rounds.logs.forEach((rObj: Logs, rIdx: number) => {
+  for (const pObj of players) {
+    for (const [rIdx, rObj] of rounds.logs.entries() as Logs) {
       let playerDMG: (string | number)[] = [];
       let playerKills: (string | number)[] = [];
 
       let player = '';
       let playingOn = '';
 
-      rObj.log?.forEach(e => {
-        player = pObj.player;
-        const attacker = e.match(/:\s\\"(.*?)</)?.at(1);
-        const isAttack = e.includes(EventLog.attack);
-        const isKill = e.includes(EventLog.kill);
-        const teamRegex = e.match(/(><(\w+)>\\"\sleft\sbuyzone)/)?.at(2);
+      if (rObj.log.length) {
+        for (const e of rObj.log) {
+          player = pObj.player;
+          const attacker = e.match(/:\s\\"(.*?)</)?.at(1);
+          const isAttack = e.includes(EventLog.attack);
+          const isKill = e.includes(EventLog.kill);
+          const teamRegex = e.match(/(><(\w+)>\\"\sleft\sbuyzone)/)?.at(2);
 
-        if (attacker === pObj.player) {
-          if (isAttack || isKill) {
-            const damage = Number(e.match(/damage\s\\"(.*?)\\"/)?.at(1));
-            damage ? playerDMG.push(damage) : 0;
+          if (attacker === pObj.player) {
+            if (isAttack || isKill) {
+              const damage = Number(e.match(/damage\s\\"(.*?)\\"/)?.at(1));
+              damage ? playerDMG.push(damage) : 0;
 
-            const killed = e.match(/killed\s\\"(.*?)<\d\d>/)?.at(1);
-            if (killed) playerKills.push(killed);
-          }
+              const killed = e.match(/killed\s\\"(.*?)<\d\d>/)?.at(1);
+              if (killed) playerKills.push(killed);
+            }
 
-          if (!playingOn && teamRegex) {
-            playingOn = teamRegex;
+            if (!playingOn && teamRegex) {
+              playingOn = teamRegex;
+            }
           }
         }
-      });
+      }
 
       if (playingOn) {
         playerDMG.unshift(player, '-');
@@ -100,8 +102,8 @@ function processScores(rounds: Rounds, players: Players[]) {
           playerKills[3]
         );
       }
-    });
-  });
+    }
+  }
 
   return roundsPlayerStats;
 }
