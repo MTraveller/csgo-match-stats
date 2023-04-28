@@ -7,7 +7,7 @@ interface Url {
 }
 
 function MatchLog({ url }: Url) {
-  let { data, error, isLoading } = useLogFetcher(url);
+  const { data, error, isLoading } = useLogFetcher(url);
   const gameEvents = JSON.stringify(data).split('\\r\\n');
   const matchResult = processEvents(gameEvents);
 
