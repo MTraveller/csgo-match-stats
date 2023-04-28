@@ -15,7 +15,7 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
   const roundsStatus = Object.values(statuses);
 
   return (
-    <Flex justifyContent='space-between'>
+    <Flex h='60px' justifyContent='space-between'>
       <Box display='flex' flex='1' justifyContent='start'>
         <Button
           colorScheme='black'
@@ -28,19 +28,40 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
           />
         </Button>
       </Box>
-      <Box display='flex' flex='6' flexDirection='row' gap={3}>
+      <Box
+        h='45px'
+        display='flex'
+        flexFlow='row'
+        flexShrink={2}
+        overflowY='scroll'
+        gap={3}
+      >
         {statuses &&
           roundsStatus.map((obj: Round) => (
             <Circle
               key={obj.round}
-              minW={8}
-              bg='#000000'
+              display={
+                Number(obj.round) - 2 > round || Number(obj.round) < round
+                  ? 'none'
+                  : 'block'
+              }
+              minW={10}
+              bg={Number(obj.round) - 1 === round ? '#fdfe3f' : '#000000'}
               border='1px'
               borderColor='#fdfe3f'
               as='button'
               onClick={e => setRound(Number(e.currentTarget.innerText) - 1)}
             >
-              <Text color='#fdfe3f'>{obj.round}</Text>
+              <Text
+                textColor={
+                  Number(obj.round) - 1 === round ? '#000000' : '#fdfe3f'
+                }
+                fontWeight={
+                  Number(obj.round) - 1 === round ? 'black' : 'normal'
+                }
+              >
+                {obj.round}
+              </Text>
             </Circle>
           ))}
       </Box>

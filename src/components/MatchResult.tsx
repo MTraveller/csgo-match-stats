@@ -27,7 +27,7 @@ interface StatusObj {
 
 function MatchResult({ rounds, performance }: MatchResults) {
   const [round, setRound] = useState(0);
-  const statuses = rounds.statuses as unknown as StatusObj;
+  const statuses = rounds.statuses as StatusObj;
 
   const { topCTPlayer, topTRPlayer } = processTopPlayers(
     performance,
@@ -51,19 +51,34 @@ function MatchResult({ rounds, performance }: MatchResults) {
             flexDir='column'
             h='full'
             alignItems='center'
-            justifyContent='center'
+            justifyContent='space-around'
             color='black'
+            p={6}
             gap={5}
           >
-            <Heading>{statuses[round]?.map}</Heading>
-            <Heading>Round: {round + 1}</Heading>
-            <Heading>Took: </Heading>
-            <Heading size='lg'>
-              {statuses[round]?.roundTime.minutes > 0 &&
-                `${statuses[round]?.roundTime.minutes} Mins`}{' '}
-              {statuses[round]?.roundTime.seconds > 0 &&
-                `${statuses[round]?.roundTime.seconds} Secs`}
-            </Heading>
+            <Box w='full' display='flex' flexDir='column' gap={2}>
+              <Heading>{statuses[round]?.map}</Heading>
+              <Heading size='lg'>Round:</Heading>
+              <Heading>
+                {round + 1} of {Object.values(statuses).length}
+              </Heading>
+            </Box>
+            <Box w='full' display='flex' flexDir='column'>
+              <Heading size='lg'>Took: </Heading>
+              <Box display='flex' flexWrap='wrap'>
+                <Heading size='md'>
+                  {statuses[round]?.roundTime.minutes > 0 &&
+                    `${statuses[round]?.roundTime.minutes} Mins`}
+                </Heading>
+                <Heading
+                  size='md'
+                  marginLeft={statuses[round]?.roundTime.minutes > 0 ? 2.5 : 0}
+                >
+                  {statuses[round]?.roundTime.seconds > 0 &&
+                    `${statuses[round]?.roundTime.seconds} Secs`}
+                </Heading>
+              </Box>
+            </Box>
           </Box>
         </GridItem>
         <GridItem colSpan={4} bg='#000000'>
@@ -75,8 +90,8 @@ function MatchResult({ rounds, performance }: MatchResults) {
             alignItems='center'
           >
             <Box display='flex' flexDir='column' alignItems='center' gap={5}>
-              <Heading>Counter Terrorist:</Heading>
-              <Heading>{statuses[round]?.ct}</Heading>
+              <Heading color='blue.700'>Counter Terrorist:</Heading>
+              <Heading color='whiteAlpha.700'>{statuses[round]?.ct}</Heading>
             </Box>
             <Box
               w='120px'
@@ -92,8 +107,8 @@ function MatchResult({ rounds, performance }: MatchResults) {
               <Heading color='black'>{statuses[round]?.roundScore}</Heading>
             </Box>
             <Box display='flex' flexDir='column' alignItems='center' gap={5}>
-              <Heading>Terrorist:</Heading>
-              <Heading>{statuses[round]?.tr}</Heading>
+              <Heading color='red.700'>Terrorist:</Heading>
+              <Heading color='whiteAlpha.700'>{statuses[round]?.tr}</Heading>
             </Box>
           </Box>
         </GridItem>
