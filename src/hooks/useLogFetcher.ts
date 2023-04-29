@@ -14,6 +14,7 @@ const useLogFetcher = (url: string) => {
   return useQuery<Log, Error>({
     queryKey: ['logs'],
     queryFn: fetchLogs,
+    keepPreviousData: false,
     initialData: { data: '' },
   });
 };
