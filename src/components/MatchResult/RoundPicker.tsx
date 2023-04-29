@@ -30,7 +30,7 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
         </Button>
       </Box>
       <Box
-        h='45px'
+        h='40px'
         display='flex'
         flexFlow='row'
         flexShrink={2}
@@ -42,7 +42,7 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
             const roundMinusOne = Number(obj.round) - 1;
             const roundMinusTwo = Number(obj.round) - 2;
             const roundEqualCurrRound = roundMinusOne === round;
-            
+
             return (
               <Circle
                 key={obj.round}
@@ -59,19 +59,15 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
                 onClick={e => setRound(Number(e.currentTarget.innerText) - 1)}
               >
                 <Text
-                  textColor={
-                    roundEqualCurrRound ? '#000000' : '#fdfe3f'
-                  }
-                  fontWeight={
-                    roundEqualCurrRound ? 'black' : 'normal'
-                  }
+                  textColor={roundEqualCurrRound ? '#000000' : '#fdfe3f'}
+                  fontWeight={roundEqualCurrRound ? 'black' : 'normal'}
                 >
                   {obj.round}
                 </Text>
               </Circle>
-            )}
-          )}
-        </Box>
+            );
+          })}
+      </Box>
       <Box display='flex' flex='1' justifyContent='end'>
         <Button
           colorScheme='black'
