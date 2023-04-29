@@ -60,7 +60,7 @@ const MatchForm = ({ setUrl }: SetUrl) => {
           <FormHelperText>
             <Box color='whiteAlpha.600' fontSize='md' fontStyle='italic'>
               {errors.log ? (
-                <Text>errors.log.message</Text>
+                <Text>{errors.log.message}</Text>
               ) : (
                 <Text>
                   Log link e.g.
