@@ -118,12 +118,12 @@ function MatchResult({ rounds, performance }: MatchResults) {
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
           <Center h='full'>
-            <TopCT topCTPlayer={topCTPlayer} />
+            <TopPlayer topCTPlayer={topCTPlayer} />
           </Center>
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
           <Center h='full'>
-            <TopTR topTRPlayer={topTRPlayer} />
+            <TopPlayer topTRPlayer={topTRPlayer} />
           </Center>
         </GridItem>
       </Grid>
