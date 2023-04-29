@@ -13,6 +13,7 @@ interface Round {
 
 function RoundPicker({ statuses, round, setRound }: Rounds) {
   const roundsStatus = Object.values(statuses);
+  const roundsLengthMinusOne = roundsStatus.length - 1;
 
   return (
     <Flex h='60px' justifyContent='space-between'>
@@ -36,44 +37,50 @@ function RoundPicker({ statuses, round, setRound }: Rounds) {
         overflowY='scroll'
         gap={3}
       >
-        {statuses &&
-          roundsStatus.map((obj: Round) => (
-            <Circle
-              key={obj.round}
-              display={
-                Number(obj.round) - 2 > round || Number(obj.round) < round
-                  ? 'none'
-                  : 'block'
-              }
-              minW={10}
-              bg={Number(obj.round) - 1 === round ? '#fdfe3f' : '#000000'}
-              border='1px'
-              borderColor='#fdfe3f'
-              as='button'
-              onClick={e => setRound(Number(e.currentTarget.innerText) - 1)}
-            >
-              <Text
-                textColor={
-                  Number(obj.round) - 1 === round ? '#000000' : '#fdfe3f'
+        {roundsStatus.length &&
+          roundsStatus.map((obj: Round) => {
+            const roundMinusOne = Number(obj.round) - 1;
+            const roundMinusTwo = Number(obj.round) - 2;
+            const roundEqualCurrRound = roundMinusOne === round;
+            
+            return (
+              <Circle
+                key={obj.round}
+                display={
+                  roundMinusTwo > round || Number(obj.round) < round
+                    ? 'none'
+                    : 'block'
                 }
-                fontWeight={
-                  Number(obj.round) - 1 === round ? 'black' : 'normal'
-                }
+                minW={10}
+                bg={roundEqualCurrRound ? '#fdfe3f' : '#000000'}
+                border='1px'
+                borderColor='#fdfe3f'
+                as='button'
+                onClick={e => setRound(Number(e.currentTarget.innerText) - 1)}
               >
-                {obj.round}
-              </Text>
-            </Circle>
-          ))}
-      </Box>
+                <Text
+                  textColor={
+                    roundEqualCurrRound ? '#000000' : '#fdfe3f'
+                  }
+                  fontWeight={
+                    roundEqualCurrRound ? 'black' : 'normal'
+                  }
+                >
+                  {obj.round}
+                </Text>
+              </Circle>
+            )}
+          )}
+        </Box>
       <Box display='flex' flex='1' justifyContent='end'>
         <Button
           colorScheme='black'
           size='sm'
-          onClick={() => round < roundsStatus.length - 1 && setRound(round + 1)}
+          onClick={() => round < roundsLengthMinusOne && setRound(round + 1)}
         >
           <ArrowRightIcon
             boxSize={4}
-            color={round === roundsStatus.length - 1 ? '#200d19' : '#fdfe3f'}
+            color={round === roundsLengthMinusOne ? '#200d19' : '#fdfe3f'}
           />
         </Button>
       </Box>
