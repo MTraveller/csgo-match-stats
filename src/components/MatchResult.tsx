@@ -1,10 +1,11 @@
-import { Box, Center, Grid, GridItem, Heading } from '@chakra-ui/react';
-import RoundPicker from './MatchResult/RoundPicker';
 import { useState } from 'react';
-import TopCT from './MatchResult/TopCT';
-import TopTR from './MatchResult/TopTR';
-import processTopPlayers from '../utils/processTopPlayers';
+import { Box, Center, Grid, GridItem, Heading } from '@chakra-ui/react';
 import { RoundsPlayersStats } from '../utils/processScores';
+import processTopPlayers from '../utils/processTopPlayers';
+import RoundPicker from './MatchResult/RoundPicker';
+import TopPlayer from './MatchResult/TopPlayer';
+
+
 
 interface MatchResults {
   rounds: {
@@ -33,6 +34,9 @@ function MatchResult({ rounds, performance }: MatchResults) {
     performance,
     round + 1
   );
+  
+  topCTPlayer.unshift('Counter Terrorist');
+  topTRPlayer.unshift('Terrorist');
 
   return (
     <Box>
@@ -114,12 +118,12 @@ function MatchResult({ rounds, performance }: MatchResults) {
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
           <Center h='full'>
-            <TopCT topCTPlayer={topCTPlayer} />
+            <TopPlayer topPlayer={topCTPlayer} />
           </Center>
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
           <Center h='full'>
-            <TopTR topTRPlayer={topTRPlayer} />
+            <TopPlayer topPlayer={topTRPlayer} />
           </Center>
         </GridItem>
       </Grid>

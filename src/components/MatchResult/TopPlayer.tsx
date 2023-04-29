@@ -1,25 +1,29 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 
 interface TopPlayers {
-  topCTPlayer: (string | number)[];
+  topPlayer: (string | number)[];
 }
 
-function TopCT({ topCTPlayer }: TopPlayers) {
+function TopPlayer({ topPlayer }: TopPlayers) {
+  const isCT = topPlayer[0] === 'Counter Terrorist';
+  
   return (
     <Box w='full' display='flex' flexDir='column' alignItems='center' gap={3}>
       <Heading size='md' color='whiteAlpha.700'>
-        Top Counter Terrorist Player:
+        Top {topPlayer[0]} Player:
       </Heading>
       <Box w='full' display='flex' flexDir='column' alignItems='center' gap={2}>
         <Heading
           size='2xl'
           fontWeight='black'
           color='whiteAlpha.700'
-          bgGradient='linear(to-r, #000000, blue.500, #000000)'
+          bgGradient={
+            `linear(to-r, #000000, ${isCT ? 'blue.500' : 'red.500'}, #000000)`
+          }
           px={16}
           py={2}
         >
-          {topCTPlayer[0]}
+          {topPlayer[1]}
         </Heading>
         <Box w='full'>
           <Box w='full' display='flex' justifyContent='space-around'>
@@ -27,15 +31,15 @@ function TopCT({ topCTPlayer }: TopPlayers) {
               Damage done:
             </Text>
             <Text fontSize='2xl' color='whiteAlpha.700'>
-              {topCTPlayer[1]}
+              {topPlayer[2]}
             </Text>
           </Box>
           <Box w='full' display='flex' justifyContent='space-around'>
             <Text fontSize='2xl' color='whiteAlpha.700'>
-              Kills done:
+              Kills made:
             </Text>
             <Text fontSize='2xl' color='whiteAlpha.700'>
-              {topCTPlayer[2]}
+              {topPlayer[3]}
             </Text>
           </Box>
         </Box>
@@ -44,4 +48,4 @@ function TopCT({ topCTPlayer }: TopPlayers) {
   );
 }
 
-export default TopCT;
+export default TopPlayer;
