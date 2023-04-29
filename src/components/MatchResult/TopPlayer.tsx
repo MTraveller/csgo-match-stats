@@ -5,6 +5,8 @@ interface TopPlayers {
 }
 
 function TopPlayer({ topPlayer }: TopPlayers) {
+  const isCT = topPlayer[0] === 'Counter Terrorist';
+  
   return (
     <Box w='full' display='flex' flexDir='column' alignItems='center' gap={3}>
       <Heading size='md' color='whiteAlpha.700'>
@@ -15,7 +17,9 @@ function TopPlayer({ topPlayer }: TopPlayers) {
           size='2xl'
           fontWeight='black'
           color='whiteAlpha.700'
-          bgGradient='linear(to-r, #000000, blue.500, #000000)'
+          bgGradient={
+            `linear(to-r, #000000, ${isCT ? 'blue.500' : 'red.500'}, #000000)`
+          }
           px={16}
           py={2}
         >
