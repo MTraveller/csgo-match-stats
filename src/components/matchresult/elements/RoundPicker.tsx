@@ -9,8 +9,8 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import useMatchLengthStore from '../../stores/lengthStore';
-import useRoundStore from '../../stores/roundStore';
+import useMatchLengthStore from '../../../stores/lengthStore';
+import useRoundStore from '../../../stores/roundStore';
 
 function RoundPicker() {
   const { matchLength } = useMatchLengthStore();
