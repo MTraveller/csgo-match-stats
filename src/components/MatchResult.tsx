@@ -4,7 +4,7 @@ import EventsContext from '../contexts/eventsContexts';
 import TopPlayersContext from '../contexts/topPlayersContext';
 import useRoundStore from '../stores/roundStore';
 import processTopPlayers from '../utils/processTopPlayers';
-import { XL } from './matchresult/layout';
+import XL from './matchresult/layout/XL';
 
 function MatchResult() {
   const breakpoint = useBreakpoint({ ssr: false });
