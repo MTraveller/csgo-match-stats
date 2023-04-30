@@ -1,13 +1,13 @@
 import { Box, Center, Grid, GridItem, Heading } from '@chakra-ui/react';
 import { useContext } from 'react';
-import EventsContext from '../../contexts/eventsContexts';
-import useMatchLengthStore from '../../stores/lengthStore';
-import useRoundStore from '../../stores/roundStore';
-import RoundPicker from './RoundPicker';
-import Team from './Team';
-import TopPlayer from './TopPlayer';
+import EventsContext from '../../../contexts/eventsContexts';
+import useMatchLengthStore from '../../../stores/lengthStore';
+import useRoundStore from '../../../stores/roundStore';
+import RoundPicker from '../RoundPicker';
+import Team from '../Team';
+import TopPlayer from '../TopPlayer';
 
-function XLGrid() {
+function GridXL() {
   const { statuses } = useContext(EventsContext);
   const { round } = useRoundStore();
   const { matchLength } = useMatchLengthStore();
@@ -109,4 +109,4 @@ function XLGrid() {
   );
 }
 
-export default XLGrid;
+export default GridXL;
