@@ -1,14 +1,14 @@
+import { Button } from '@chakra-ui/button';
 import {
   FormControl,
   FormHelperText,
   FormLabel,
 } from '@chakra-ui/form-control';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import { Button } from '@chakra-ui/button';
 import { Box, Text } from '@chakra-ui/layout';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = z.object({
   log: z.string().url().endsWith('.txt', { message: 'URL must end with .txt' }),

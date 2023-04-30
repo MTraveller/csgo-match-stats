@@ -1,85 +1,62 @@
-import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
-import { Box, Button, Circle, Flex, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  Skeleton,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Text,
+  Tooltip,
+} from '@chakra-ui/react';
+import { useState } from 'react';
+import useMatchLengthStore from '../../stores/lengthStore';
+import useRoundStore from '../../stores/roundStore';
 
-interface Rounds {
-  statuses: object;
-  round: number;
-  setRound: React.Dispatch<React.SetStateAction<number>>;
-}
+function RoundPicker() {
+  const { matchLength } = useMatchLengthStore();
+  const { setRound } = useRoundStore();
 
-interface Round {
-  round: string;
-}
+  const [sliderValue, setSliderValue] = useState(1);
+  const [showTooltip, setShowTooltip] = useState(false);
 
-function RoundPicker({ statuses, round, setRound }: Rounds) {
-  const roundsStatus = Object.values(statuses);
-  const roundsLengthMinusOne = roundsStatus.length - 1;
-
-  return (
-    <Flex h='60px' justifyContent='space-between'>
-      <Box display='flex' flex='1' justifyContent='start'>
-        <Button
-          colorScheme='black'
-          size='sm'
-          onClick={() => round > 0 && setRound(round - 1)}
-        >
-          <ArrowLeftIcon
-            boxSize={4}
-            color={round === 0 ? '#200d19' : '#fdfe3f'}
-          />
-        </Button>
-      </Box>
-      <Box
-        h='40px'
-        display='flex'
-        flexFlow='row'
-        flexShrink={2}
-        overflowY='scroll'
-        gap={3}
+  return !matchLength ? (
+    <Skeleton
+      startColor='blue.600'
+      endColor='red.600'
+      height='40px'
+      fadeDuration={0.2}
+    >
+      <Text>loading...</Text>
+    </Skeleton>
+  ) : (
+    <Flex h='60px'>
+      <Slider
+        id='slider'
+        defaultValue={1}
+        min={1}
+        max={matchLength}
+        size='lg'
+        onChange={v => (setSliderValue(v), setRound(v - 1))}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
       >
-        {roundsStatus.length &&
-          roundsStatus.map((obj: Round) => {
-            const roundMinusOne = Number(obj.round) - 1;
-            const roundMinusTwo = Number(obj.round) - 2;
-            const roundEqualCurrRound = roundMinusOne === round;
-
-            return (
-              <Circle
-                key={obj.round}
-                display={
-                  roundMinusTwo > round || Number(obj.round) < round
-                    ? 'none'
-                    : 'block'
-                }
-                minW={10}
-                bg={roundEqualCurrRound ? '#fdfe3f' : '#000000'}
-                border='1px'
-                borderColor='#fdfe3f'
-                as='button'
-                onClick={e => setRound(Number(e.currentTarget.innerText) - 1)}
-              >
-                <Text
-                  textColor={roundEqualCurrRound ? '#000000' : '#fdfe3f'}
-                  fontWeight={roundEqualCurrRound ? 'black' : 'normal'}
-                >
-                  {obj.round}
-                </Text>
-              </Circle>
-            );
-          })}
-      </Box>
-      <Box display='flex' flex='1' justifyContent='end'>
-        <Button
-          colorScheme='black'
-          size='sm'
-          onClick={() => round < roundsLengthMinusOne && setRound(round + 1)}
+        <SliderTrack h='6px' borderRadius='full'>
+          <SliderFilledTrack bgColor='#fdfe3f' />
+        </SliderTrack>
+        <Tooltip
+          px={4}
+          py={1}
+          hasArrow
+          bgColor='#fdfe3f'
+          color='black'
+          fontSize='md'
+          placement='top'
+          isOpen={showTooltip}
+          label={`Round ${sliderValue}`}
         >
-          <ArrowRightIcon
-            boxSize={4}
-            color={round === roundsLengthMinusOne ? '#200d19' : '#fdfe3f'}
-          />
-        </Button>
-      </Box>
+          <SliderThumb boxSize={6} />
+        </Tooltip>
+      </Slider>
     </Flex>
   );
 }

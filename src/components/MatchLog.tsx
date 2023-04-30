@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import EventsContext from '../contexts/eventsContexts';
 import useLogFetcher from '../hooks/useLogFetcher';
+import useMatchLengthStore from '../stores/lengthStore';
 import processEvents from '../utils/processEvents';
 import MatchResult from './MatchResult';
 
@@ -7,19 +10,23 @@ interface Url {
 }
 
 function MatchLog({ url }: Url) {
-  const { data, error, isLoading } = useLogFetcher(url);
+  const { data, error } = useLogFetcher(url);
+  const { matchLength, setMatchLength } = useMatchLengthStore();
   const gameEvents = JSON.stringify(data).split('\\r\\n');
-  const matchResult = processEvents(gameEvents);
+  const { statuses, roundsPlayersStats } = processEvents(gameEvents);
 
-  return isLoading ? (
-    <h2>Loading...</h2>
-  ) : error ? (
+  const statusesLength = Object.values(statuses).map((_, idx) => idx).length;
+
+  useEffect(() => {
+    if (statusesLength && !length) setMatchLength(statusesLength);
+  }, [matchLength, statusesLength]);
+
+  return error ? (
     <h2>{error.message}</h2>
   ) : (
-    <MatchResult
-      rounds={matchResult.rounds}
-      performance={matchResult.performance}
-    />
+    <EventsContext.Provider value={{ statuses, roundsPlayersStats }}>
+      <MatchResult />
+    </EventsContext.Provider>
   );
 }
 

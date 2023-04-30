@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Box, Center, Flex, Heading } from '@chakra-ui/react';
 
-const Nav = () => {
+function Nav() {
   return (
     <header>
       <Flex pl='3' alignItems='center'>
@@ -14,6 +14,6 @@ const Nav = () => {
       </Flex>
     </header>
   );
-};
+}
 
 export default Nav;

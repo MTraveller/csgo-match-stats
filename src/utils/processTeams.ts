@@ -1,5 +1,5 @@
+import { Statuses } from '../contexts/eventsContexts';
 import { EventLog } from './processEvents';
-import { Statuses } from './processRounds';
 
 interface Logs {
   log: string[];
