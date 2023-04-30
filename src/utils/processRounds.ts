@@ -1,23 +1,10 @@
-import timeDiffCalc from './timeDiffCalc';
+import { Statuses } from '../contexts/eventsContexts';
 import { EventLog } from './processEvents';
 import processTeams from './processTeams';
+import timeDiffCalc from './timeDiffCalc';
 
 interface Logs {
   log: string[];
-}
-
-export interface Statuses {
-  map: string;
-  ct?: string;
-  tr?: string;
-  round: string;
-  roundScore: string;
-  roundTime: object;
-}
-
-export interface Rounds {
-  logs: object[];
-  roundStatuses?: object[];
 }
 
 function processRounds(matchStart: string[]) {
@@ -50,7 +37,6 @@ function processRounds(matchStart: string[]) {
         map: matchMap,
         round: roundsPlayed,
         roundScore,
-        roundTime: {},
       });
   }
 
@@ -59,6 +45,8 @@ function processRounds(matchStart: string[]) {
   const roundsPlayed = roundsIndexes.length / 2;
 
   const logs: Logs[] = [];
+
+  const newRoundStatuses: Statuses[] = [...roundStatuses];
 
   for (let i = 0; i < roundsPlayed - 1; i++) {
     const sliceFrom = roundsIndexes.shift();
@@ -80,7 +68,7 @@ function processRounds(matchStart: string[]) {
       }
     }
 
-    roundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
+    newRoundStatuses[i].roundTime = timeDiffCalc(startTime, finishTime);
 
     logs.push({
       log: matchStart.slice(sliceFrom, sliceTo ? sliceTo + 1 : -1),
@@ -89,7 +77,7 @@ function processRounds(matchStart: string[]) {
     if (roundsIndexes.length === 1) roundsIndexes.pop();
   }
 
-  const roundsResult = processTeams(logs, roundStatuses);
+  const roundsResult = processTeams(logs, newRoundStatuses);
 
   return roundsResult;
 }

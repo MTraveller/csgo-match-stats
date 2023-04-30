@@ -1,11 +1,14 @@
-import { RoundsPlayersStats } from './processScores';
+import { RoundsPlayersStats } from '../contexts/eventsContexts';
 
-function processTopPlayers(performance: RoundsPlayersStats, currRound: number) {
+function processTopPlayers(
+  roundsPlayersStats: RoundsPlayersStats,
+  currRound: number
+) {
   let topCTPlayer: [string, number, number] = ['', 0, 0];
   let topTRPlayer: [string, number, number] = ['', 0, 0];
 
-  for (const round of Object.values(performance)) {
-    if (--currRound < 0) {
+  for (const round of Object.values(roundsPlayersStats)) {
+    if (--currRound + 1 < 0) {
       break;
     }
 
@@ -40,7 +43,9 @@ function processTopPlayers(performance: RoundsPlayersStats, currRound: number) {
     topTRPlayer = [topTRName, topTRDmg, topTRKill];
   }
 
-  return { topCTPlayer: [...topCTPlayer], topTRPlayer: [...topTRPlayer] };
+  const topPlayers = [[...topCTPlayer], [...topTRPlayer]];
+
+  return topPlayers;
 }
 
 export default processTopPlayers;

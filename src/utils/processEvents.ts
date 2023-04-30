@@ -1,6 +1,6 @@
-import processScores from './processScores';
 import processPlayers from './processPlayers';
 import processRounds from './processRounds';
+import processScores from './processScores';
 
 export const enum EventLog {
   start = 'Match_Start',
@@ -21,10 +21,11 @@ function processEvents(matchLog: string[]) {
     matchLog.findLastIndex(e => e.includes(EventLog.start))
   );
   const players = processPlayers(matchLog, EventLog.assigned);
-  const playingRounds = processRounds(matchStart);
-  const roundsPlayersStats = processScores(playingRounds, players);
+  const { logs, statuses } = processRounds(matchStart);
 
-  return { rounds: playingRounds, performance: roundsPlayersStats };
+  const roundsPlayersStats = processScores(logs, players);
+
+  return { statuses, roundsPlayersStats };
 }
 
 export default processEvents;

@@ -1,27 +1,18 @@
+import { RoundsPlayersStats } from '../contexts/eventsContexts';
 import { EventLog } from './processEvents';
 import { Players } from './processPlayers';
-import { Rounds } from './processRounds';
 
-interface Logs extends IterableIterator<[number, Logs]> {
+interface Logs {
   log: string[];
 }
 
-export interface RoundsPlayersStats {
-  [round: number]: {
-    [team: string]: {
-      [player: string]: {
-        damage: number;
-        kills: number;
-      };
-    };
-  };
-}
-
-function processScores(rounds: Rounds, players: Players[]) {
+function processScores(logs: Logs[], players: Players[]) {
   const roundsPlayerStats: RoundsPlayersStats = {};
 
   for (const pObj of players) {
-    for (const [rIdx, rObj] of rounds.logs.entries() as Logs) {
+    for (const [i, rObj] of Object.entries(logs)) {
+      const rIdx = Number(i);
+
       let playerDMG: (string | number)[] = [];
       let playerKills: (string | number)[] = [];
 

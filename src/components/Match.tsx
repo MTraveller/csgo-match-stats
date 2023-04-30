@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { Box, Text } from '@chakra-ui/react';
+import { useState } from 'react';
+import processUrlTeams from '../utils/processUrlTeams';
 import MatchForm from './MatchForm';
 import MatchLog from './MatchLog';
-import processUrlTeams from '../utils/processUrlTeams';
 
-const Match = () => {
+function Match() {
   const [url, setUrl] = useState('');
   const teamsIsValid = processUrlTeams(url).length === 2 ? true : false;
 
@@ -25,6 +25,6 @@ const Match = () => {
       </Box>
     </>
   );
-};
+}
 
 export default Match;
