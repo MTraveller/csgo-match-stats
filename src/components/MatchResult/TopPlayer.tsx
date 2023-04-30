@@ -1,7 +1,10 @@
 import { Box, Heading, SkeletonText, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import TopPlayersContext from '../../contexts/topPlayersContext';
-import { Teams } from './layout/XL';
+
+type Teams = {
+  team: 'ct' | 'tr';
+};
 
 function TopPlayer({ team }: Teams) {
   const { topPlayers } = useContext(TopPlayersContext);

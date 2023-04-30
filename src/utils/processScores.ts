@@ -1,19 +1,7 @@
-import { EventLog } from './processEvents';
-import { Players } from './processPlayers';
+import { EventLog, Players, RoundsPlayersStats } from '../exports';
 
 interface Logs {
   log: string[];
-}
-
-export interface RoundsPlayersStats {
-  [round: number]: {
-    [team: string]: {
-      [player: string]: {
-        damage: number;
-        kills: number;
-      };
-    };
-  };
 }
 
 function processScores(logs: Logs[], players: Players[]) {

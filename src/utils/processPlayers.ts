@@ -1,7 +1,4 @@
-export interface Players {
-  team: string;
-  player: string;
-}
+import { Players } from '../exports';
 
 function processPlayers(matchLog: string[], assigned: string) {
   const teams: Players[] = [];

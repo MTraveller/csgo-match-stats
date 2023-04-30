@@ -1,5 +1,10 @@
 import { Box, Heading, Spinner } from '@chakra-ui/react';
-import { Teams } from './layout/XL';
+
+interface Teams {
+  team: {
+    [x: number]: string;
+  };
+}
 
 function Team({ team }: Teams) {
   const isCT = team[1] === 'ct' ? true : false;

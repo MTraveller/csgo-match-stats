@@ -1,5 +1,4 @@
-import { Statuses } from '../contexts/eventsContexts';
-import { EventLog } from './processEvents';
+import { EventLog, Statuses } from '../exports';
 import processTeams from './processTeams';
 import timeDiffCalc from './timeDiffCalc';
 
@@ -46,7 +45,7 @@ function processRounds(matchStart: string[]) {
 
   const logs: Logs[] = [];
 
-  let newRoundStatuses: Statuses[] = [...roundStatuses];
+  const newRoundStatuses: Statuses[] = [...roundStatuses];
 
   for (let i = 0; i < roundsPlayed - 1; i++) {
     const sliceFrom = roundsIndexes.shift();

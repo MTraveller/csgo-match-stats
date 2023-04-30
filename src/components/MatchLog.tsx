@@ -19,7 +19,7 @@ function MatchLog({ url }: Url) {
 
   useEffect(() => {
     if (statusesLength && !length) setMatchLength(statusesLength);
-  }, [matchLength, statusesLength]);
+  }, [matchLength, statusesLength, setMatchLength]);
 
   return error ? (
     <h2>{error.message}</h2>

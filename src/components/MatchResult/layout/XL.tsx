@@ -7,10 +7,6 @@ import RoundPicker from '../RoundPicker';
 import Team from '../Team';
 import TopPlayer from '../TopPlayer';
 
-export type Teams = {
-  team: string[] | 'ct' | 'tr';
-};
-
 function XL() {
   const { statuses } = useContext(EventsContext);
   const { round } = useRoundStore();
