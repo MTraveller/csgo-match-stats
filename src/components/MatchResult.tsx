@@ -4,7 +4,6 @@ import EventsContext from '../contexts/eventsContexts';
 import TopPlayersContext from '../contexts/topPlayersContext';
 import useRoundStore from '../stores/roundStore';
 import processTopPlayers from '../utils/processTopPlayers';
-import GridXL from './matchresult/grids/gridXL';
 
 function MatchResult() {
   const breakpoint = useBreakpoint({ ssr: false });
@@ -21,7 +20,7 @@ function MatchResult() {
   return (
     <TopPlayersContext.Provider value={{ topPlayers }}>
       <Box>
-        <GridXL />
+        <p>Hello World</p>
       </Box>
     </TopPlayersContext.Provider>
   );
