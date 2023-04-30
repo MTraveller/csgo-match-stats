@@ -3,6 +3,7 @@ import {
   Skeleton,
   Slider,
   SliderFilledTrack,
+  SliderMark,
   SliderThumb,
   SliderTrack,
   Text,
@@ -18,6 +19,13 @@ function RoundPicker() {
 
   const [sliderValue, setSliderValue] = useState(1);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  const labelStyles = {
+    mt: '8',
+    ml: '-2',
+    fontSize: 'sm',
+    color: 'whiteAlpha.500',
+  };
 
   return !matchLength ? (
     <Skeleton
@@ -40,6 +48,13 @@ function RoundPicker() {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
+        {Array.from({ length: matchLength }, (_, idx) => idx + 1).map(num => {
+          return (
+            <SliderMark key={num} value={num} {...labelStyles}>
+              {num}
+            </SliderMark>
+          );
+        })}
         <SliderTrack h='6px' borderRadius='full'>
           <SliderFilledTrack bgColor='#fdfe3f' />
         </SliderTrack>
