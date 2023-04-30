@@ -1,5 +1,8 @@
 import React from 'react';
-import { TopPlayersType } from '../exports';
+
+interface TopPlayersType {
+  topPlayers: (string | number)[][];
+}
 
 const TopPlayersContext = React.createContext<TopPlayersType>(
   {} as TopPlayersType

@@ -1,4 +1,6 @@
-import { EventLog, Players, RoundsPlayersStats } from '../exports';
+import { RoundsPlayersStats } from '../contexts/eventsContexts';
+import { EventLog } from './processEvents';
+import { Players } from './processPlayers';
 
 interface Logs {
   log: string[];

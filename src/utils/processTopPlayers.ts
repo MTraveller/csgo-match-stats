@@ -1,4 +1,4 @@
-import { RoundsPlayersStats } from '../exports';
+import { RoundsPlayersStats } from '../contexts/eventsContexts';
 
 function processTopPlayers(
   roundsPlayersStats: RoundsPlayersStats,

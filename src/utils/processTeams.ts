@@ -1,4 +1,5 @@
-import { EventLog, Statuses } from '../exports';
+import { Statuses } from '../contexts/eventsContexts';
+import { EventLog } from './processEvents';
 
 interface Logs {
   log: string[];
