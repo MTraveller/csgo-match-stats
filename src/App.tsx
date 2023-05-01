@@ -3,8 +3,8 @@ import Nav from './components/Nav';
 import Match from './components/Match';
 
 function App() {
-  // eslint-disable-next-line
-  let breakpoint = useBreakpoint();
+  /* eslint-disable no-constant-condition */
+  const breakpoint = useBreakpoint();
 
   return (
     <Grid
