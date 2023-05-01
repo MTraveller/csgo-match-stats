@@ -1,6 +1,17 @@
 # CS:GO Match Server Log Stats Viewer
 
+Check it out! I made this app with TypeScript, Vitejs, React, and Chakra-ui! 🚀
+
+I gotta admit, there might be a hiccup or two because I'm still getting the hang of Chakra-ui, reactQuery, hook-form, zustang, zod and most importantly - TypeScript. But hey, every mistake is a lesson learned, right? 😉
+
+The app is mobile responsive! So you can take it with you wherever you go. 📱
+
 To run on your machine:
+
+First install git if it doesn't exsist on your computer.
+
+Then in the terminal: git clone https://github.com/MTraveller/csgo-match-stats.git
+
 `npm i` && `npm run dev`, additional commands ->
 
 - `npm run build`: Builds into ./dist folder
@@ -8,16 +19,19 @@ To run on your machine:
 - `npm run test`: run tests with jest
 - `npm run preview`: runs a production build
 
-This app was made using Vitejs, React, and Chakra-ui and was written with TypeScript. Unfortunately, there maybe be an issue here or there as I am new to Chakra-ui, reactQuerym hook-form, zustang and zod. I got much to learn and this tiny project was part of my learning journey that I am excited about.
-
-App should be fully mobile responsive.
-
-Thanks for visiting :)
-
 #### Libraries used:
 
 - react-hook-form resolvers
+    - `react-hook-form-resolvers` is a library for custom validation rules in React forms.
+  
 - react-hook-form
+    - `react-hook-form` is a library for simplified React form input validation and handling.
+
 - reactQuery
+    - `react-query` is a library for data fetching and caching in React applications. 
+
 - zustand
+    - `zustand` is a small, fast and scalable state management library for React applications.
+  
 - zod
+    - `zod` is a TypeScript-first schema validation library with a focus on developer experience. 
