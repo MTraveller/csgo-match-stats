@@ -1,4 +1,4 @@
-import { Box, Heading, Spinner } from '@chakra-ui/react';
+import { Heading, Spinner } from '@chakra-ui/react';
 import { useContext } from 'react';
 import EventsContext from '../../../contexts/eventsContexts';
 import useRoundStore from '../../../stores/roundStore';
@@ -17,12 +17,12 @@ function Team({ team }: Teams) {
   return team === '' ? (
     <Spinner size='xl' color={isCT ? 'blue.700' : 'red.700'} />
   ) : (
-    <Box display='flex' flexDir='column' alignItems='center' gap={5}>
+    <>
       <Heading color={isCT ? 'blue.600' : 'red.600'}>
         {isCT ? 'Counter Terrorist' : 'Terrorist'}
       </Heading>
       <Heading color='whiteAlpha.700'>{ctOrTr}</Heading>
-    </Box>
+    </>
   );
 }
 

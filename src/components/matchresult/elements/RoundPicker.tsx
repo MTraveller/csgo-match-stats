@@ -4,6 +4,7 @@ import {
   Slider,
   SliderFilledTrack,
   SliderMark,
+  SliderProps,
   SliderThumb,
   SliderTrack,
   Text,
@@ -13,7 +14,7 @@ import { useState } from 'react';
 import useMatchLengthStore from '../../../stores/lengthStore';
 import useRoundStore from '../../../stores/roundStore';
 
-function RoundPicker() {
+function RoundPicker({ minH, orientation, mt, ml, fontSize }: SliderProps) {
   const { matchLength } = useMatchLengthStore();
   const { setRound } = useRoundStore();
 
@@ -21,9 +22,9 @@ function RoundPicker() {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const labelStyles = {
-    mt: '8',
-    ml: '-2',
-    fontSize: 'sm',
+    mt: mt ? mt : '8',
+    ml: ml ? ml : '-2',
+    fontSize: fontSize ? fontSize : 'sm',
     color: 'whiteAlpha.500',
   };
 
@@ -37,13 +38,15 @@ function RoundPicker() {
       <Text>loading...</Text>
     </Skeleton>
   ) : (
-    <Flex h='60px'>
+    <Flex h='max-content'>
       <Slider
         id='slider'
+        minH={minH ? minH : '32px'}
+        size='lg'
         defaultValue={1}
         min={1}
         max={matchLength}
-        size='lg'
+        orientation={orientation ? orientation : 'horizontal'}
         onChange={v => (setSliderValue(v), setRound(v - 1))}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
