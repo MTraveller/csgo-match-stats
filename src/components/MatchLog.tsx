@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import EventsContext from '../contexts/eventsContexts';
-import useLogFetcher from '../hooks/useLogFetcher';
 import useMatchLengthStore from '../stores/lengthStore';
+import useLogStore from '../stores/logStore';
 import processEvents from '../utils/processEvents';
 import MatchResult from './MatchResult';
 
@@ -9,9 +9,10 @@ interface Url {
   url: string;
 }
 
-function MatchLog({ url }: Url) {
-  const { data, error } = useLogFetcher(url);
-  const { matchLength, setMatchLength } = useMatchLengthStore();
+function MatchLog() {
+  const { log } = useLogStore();
+  // const { data, error } = useLogFetcher(url);
+  let { matchLength, setMatchLength } = useMatchLengthStore();
   const gameEvents = JSON.stringify(data).split('\\r\\n');
   const { statuses, roundsPlayersStats } = processEvents(gameEvents);
 

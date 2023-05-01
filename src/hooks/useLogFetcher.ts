@@ -6,6 +6,8 @@ interface Log {
 }
 
 const useLogFetcher = (url: string) => {
+  console.log('useLogFetcher', url);
+
   const fetchLogs = () =>
     axios
       .get<Log>('https://api.codetabs.com/v1/proxy/?quest=' + url)
@@ -14,7 +16,7 @@ const useLogFetcher = (url: string) => {
   return useQuery<Log, Error>({
     queryKey: ['logs'],
     queryFn: fetchLogs,
-    keepPreviousData: false,
+    keepPreviousData: true,
     initialData: { data: '' },
   });
 };
