@@ -2,13 +2,15 @@
 
 Check it out! I made this app with TypeScript, Vitejs, React, and Chakra-ui! 🚀
 
+It’s official: I’ve fallen in love with TypeScript. It’s awesome - it catches most errors and makes coding faster and easier once you get the hang of it.
+
 I gotta admit, there might be a hiccup or two because I'm still getting the hang of Chakra-ui, reactQuery, hook-form, zustang, zod and most importantly - TypeScript. But hey, every mistake is a lesson learned, right? 😉
 
 The app is mobile responsive! So you can take it with you wherever you go. 📱
 
 To run on your machine:
 
-First install git if it doesn't exsist on your computer.
+First install git if it doesn't exist on your computer.
 
 Then in the terminal: git clone https://github.com/MTraveller/csgo-match-stats.git
 
