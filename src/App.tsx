@@ -3,7 +3,8 @@ import Nav from './components/Nav';
 import Match from './components/Match';
 
 function App() {
-  const breakpoint = useBreakpoint();
+  let breakpoint = useBreakpoint();
+
   return (
     <Grid
       templateAreas={`"header" "main" "footer"`}

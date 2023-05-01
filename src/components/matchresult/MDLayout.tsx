@@ -12,15 +12,15 @@ function MDLayout() {
         <RoundPicker />
       </Box>
       <Grid
-        h='600px'
-        templateRows='repeat(2, 1fr)'
+        h='800px'
+        templateRows='repeat(8, 1fr)'
         templateColumns='repeat(5, 1fr)'
         gap={4}
       >
-        <GridItem rowSpan={1} colSpan={1} bg='#fdfe3f' borderLeftRadius='10'>
+        <GridItem rowSpan={2} colSpan={1} bg='#fdfe3f' borderLeftRadius='10'>
           <MapDetails />
         </GridItem>
-        <GridItem colSpan={4} height='360px' bg='#000000'>
+        <GridItem rowSpan={2} colSpan={4} height='360px' bg='#000000'>
           <Box
             h='full'
             display='flex'
@@ -48,12 +48,12 @@ function MDLayout() {
             </Box>
           </Box>
         </GridItem>
-        <GridItem colSpan={5} bg='#000000'>
+        <GridItem rowSpan={3} colSpan={5} bg='#000000'>
           <Center h='full'>
             <TopPlayer team={'ct'} />
           </Center>
         </GridItem>
-        <GridItem colSpan={5} bg='#000000'>
+        <GridItem rowSpan={3} colSpan={5} bg='#000000'>
           <Center h='full'>
             <TopPlayer team={'tr'} />
           </Center>
