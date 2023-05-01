@@ -12,7 +12,7 @@ function Match() {
     <>
       <MatchForm setUrl={setUrl} />
 
-      <Box w='full' bg='#251821' p={10}>
+      <Box w='full' bg='#251821'>
         {!teamsIsValid && url[1] ? (
           <Text>Please enter a valid url with team names and match log!</Text>
         ) : teamsIsValid && url[1] ? (

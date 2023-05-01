@@ -5,9 +5,9 @@ import Scores from './elements/Scores';
 import Team from './elements/Team';
 import TopPlayer from './elements/TopPlayer';
 
-function XLLayout() {
+function LGLayout() {
   return (
-    <>
+    <Box p={10}>
       <Box minH='60px' mb='6' p='0'>
         <RoundPicker />
       </Box>
@@ -28,12 +28,14 @@ function XLLayout() {
             justifyContent='space-around'
             alignItems='center'
           >
-            <Team team={'ct'} />
+            <Box display='flex' flexDir='column' alignItems='center' gap={2}>
+              <Team team={'ct'} />
+            </Box>
             <Box
               w='120px'
               h='80px'
               display='flex'
-              flexDir='column'
+              flexDir='row'
               justifyContent='center'
               alignItems='center'
               bgColor='#fdfe3f'
@@ -42,7 +44,9 @@ function XLLayout() {
             >
               <Scores />
             </Box>
-            <Team team={'tr'} />
+            <Box display='flex' flexDir='column' alignItems='center' gap={2}>
+              <Team team={'tr'} />
+            </Box>
           </Box>
         </GridItem>
         <GridItem colSpan={2} bg='#000000'>
@@ -56,8 +60,8 @@ function XLLayout() {
           </Center>
         </GridItem>
       </Grid>
-    </>
+    </Box>
   );
 }
 
-export default XLLayout;
+export default LGLayout;

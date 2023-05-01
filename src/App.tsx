@@ -1,8 +1,9 @@
-import { Container, Grid, GridItem } from '@chakra-ui/react';
+import { Container, Grid, GridItem, useBreakpoint } from '@chakra-ui/react';
 import Nav from './components/Nav';
 import Match from './components/Match';
 
 function App() {
+  const breakpoint = useBreakpoint();
   return (
     <Grid
       templateAreas={`"header" "main" "footer"`}
@@ -24,13 +25,13 @@ function App() {
       <GridItem pl='2' area={'header'}>
         <Nav />
       </GridItem>
-      <GridItem p='6' area={'main'}>
+      <GridItem p={breakpoint === 'base' || 'sm' ? 0 : 6} area={'main'}>
         <Container
+          centerContent
           maxWidth='1400px'
           display='flex'
           flexDirection='column'
           flex='1'
-          centerContent
         >
           <Match />
         </Container>
