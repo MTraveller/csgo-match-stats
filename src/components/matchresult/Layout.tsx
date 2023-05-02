@@ -12,14 +12,13 @@ function Layout() {
   const breakpoint = useBreakpoint({ ssr: false });
 
   const layout: Layouts = {
-    xl: <LGLayout />,
     lg: <LGLayout />,
     md: <MDLayout />,
     sm: <SMLayout />,
     base: <BaseLayout />,
   };
 
-  return layout[breakpoint];
+  return layout[breakpoint] || <LGLayout />;
 }
 
 export default Layout;
