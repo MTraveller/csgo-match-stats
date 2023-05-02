@@ -1,28 +1,31 @@
 import { useEffect } from 'react';
-import EventsContext from '../contexts/eventsContexts';
-import useLogFetcher from '../hooks/useLogFetcher';
+import EventsContext, {
+  RoundsPlayersStats,
+  Statuses,
+} from '../contexts/eventsContexts';
+import useProcessLog from '../hooks/useProcessLog';
 import useMatchLengthStore from '../stores/lengthStore';
-import processEvents from '../utils/processEvents';
 import MatchResult from './MatchResult';
 
-interface Url {
-  url: string;
+interface ProcessLogs {
+  statuses: Statuses[];
+  roundsPlayersStats: RoundsPlayersStats;
+  isError: boolean;
+  error: Error | null;
 }
 
-function MatchLog({ url }: Url) {
-  const { data, error } = useLogFetcher(url);
+function MatchLog() {
+  const { statuses, roundsPlayersStats, isError, error }: ProcessLogs =
+    useProcessLog();
   const { matchLength, setMatchLength } = useMatchLengthStore();
-  const gameEvents = JSON.stringify(data).split('\\r\\n');
-  const { statuses, roundsPlayersStats } = processEvents(gameEvents);
-
-  const statusesLength = Object.values(statuses).map((_, idx) => idx).length;
 
   useEffect(() => {
-    if (statusesLength && !length) setMatchLength(statusesLength);
-  }, [matchLength, statusesLength, setMatchLength]);
+    const statusesLength = Object.keys(statuses).length;
+    if (statusesLength !== matchLength) setMatchLength(statusesLength);
+  }, [statuses, matchLength, setMatchLength]);
 
-  return error ? (
-    <h2>{error.message}</h2>
+  return isError ? (
+    <h2>{error?.message}</h2>
   ) : (
     <EventsContext.Provider value={{ statuses, roundsPlayersStats }}>
       <MatchResult />

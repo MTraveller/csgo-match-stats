@@ -9,6 +9,7 @@ import { Box, Text } from '@chakra-ui/layout';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import useUrlStore from '../stores/urlStore';
 
 const schema = z.object({
   log: z.string().url().endsWith('.txt', { message: 'URL must end with .txt' }),
@@ -16,11 +17,8 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface SetUrl {
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const MatchForm = ({ setUrl }: SetUrl) => {
+const MatchForm = () => {
+  const { url, setUrl } = useUrlStore();
   const {
     register,
     handleSubmit,
@@ -28,7 +26,11 @@ const MatchForm = ({ setUrl }: SetUrl) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    if (isValid && !errors.log) return setUrl(data.log);
+    console.log(url !== data.log);
+    if (isValid && !errors.log)
+      return url !== data.log
+        ? setUrl(data.log, true)
+        : setUrl(data.log, false);
   };
 
   return (
