@@ -26,7 +26,6 @@ const MatchForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(url !== data.log);
     if (isValid && !errors.log)
       return url !== data.log
         ? setUrl(data.log, true)
