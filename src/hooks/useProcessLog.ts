@@ -3,20 +3,19 @@ import useLogFetcher from './useLogFetcher';
 
 const useProcessLog = () => {
   const { data, isError, error } = useLogFetcher();
+  const { isLog, setLog } = useUrlLogsStore();
 
   const gameEvents: string[] = [];
-  let isErrorUrl = false;
 
   try {
     gameEvents.push(...JSON.stringify(data).split('\\r\\n'));
   } catch {
-    // TODO: Implement solution when URL has no logs.
-    isErrorUrl = true;
+    setLog(false);
   }
 
   const { statuses, roundsPlayersStats } = processEvents(gameEvents);
 
-  return { statuses, roundsPlayersStats, isError, error, isErrorUrl };
+  return { statuses, roundsPlayersStats, isError, error };
 };
 
 export default useProcessLog;
