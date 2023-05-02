@@ -11,7 +11,7 @@ function Scores() {
   return isMap ? (
     <Heading color='black'>{statuses[round].roundScore}</Heading>
   ) : (
-    <Spinner size='lg' />
+    <Spinner size='lg' color='black' />
   );
 }
 

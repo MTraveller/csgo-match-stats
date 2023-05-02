@@ -1,31 +1,24 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import useUrlStore from '../stores/urlStore';
 
 interface Logs {
   data: string;
 }
 
-interface Fetchs {
-  url: string;
-  refetchUrl: boolean;
-}
+const useLogFetcher = () => {
+  const { valid, url } = useUrlStore();
 
-const useLogFetcher = (url, refetchUrl): Fetchs => {
   const fetchLogs = () =>
     axios
-      .get<Log>('https://api.codetabs.com/v1/proxy/?quest=' + url)
+      .get<Logs>('https://api.codetabs.com/v1/proxy/?quest=' + url)
       .then(res => res.data);
 
-  const data = useQuery<Logs, Error>({
-    queryKey: ['logs'],
+  return useQuery<Logs, Error>({
+    queryKey: ['logs', valid && url],
     queryFn: fetchLogs,
-    keepPreviousData: true,
-    initialData: { data: '' },
+    enabled: valid && !!url,
   });
-  
-  if (refetchUrl) useQuery().refetch()
-  
-  return data;
 };
 
 export default useLogFetcher;

@@ -18,7 +18,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const MatchForm = () => {
-  const { setUrl } = useUrlStore();
+  const { url, setUrl } = useUrlStore();
   const {
     register,
     handleSubmit,
@@ -26,7 +26,11 @@ const MatchForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: FieldValues) => {
-    if (isValid && !errors.log) return setUrl(data.log);
+    console.log(url !== data.log);
+    if (isValid && !errors.log)
+      return url !== data.log
+        ? setUrl(data.log, true)
+        : setUrl(data.log, false);
   };
 
   return (

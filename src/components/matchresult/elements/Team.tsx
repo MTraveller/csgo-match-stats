@@ -14,7 +14,7 @@ function Team({ team }: Teams) {
   const isCT = team === 'ct' ? true : false;
   const ctOrTr = isCT ? statuses[round]?.ct : statuses[round]?.tr;
 
-  return team === '' ? (
+  return !Object.keys(statuses).length ? (
     <Spinner size='xl' color={isCT ? 'blue.700' : 'red.700'} />
   ) : (
     <>
