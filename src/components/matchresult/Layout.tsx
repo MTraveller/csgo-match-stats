@@ -12,7 +12,6 @@ function Layout() {
   const breakpoint = useBreakpoint({ ssr: false });
 
   const layout: Layouts = {
-    xl: <LGLayout />,
     lg: <LGLayout />,
     md: <MDLayout />,
     sm: <SMLayout />,
