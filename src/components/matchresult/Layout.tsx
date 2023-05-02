@@ -19,7 +19,7 @@ function Layout() {
     base: <BaseLayout />,
   };
 
-  return layout[breakpoint];
+  return layout[breakpoint] || <LGLayout />;
 }
 
 export default Layout;
