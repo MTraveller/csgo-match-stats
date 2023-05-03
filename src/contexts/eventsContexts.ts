@@ -23,6 +23,7 @@ export interface RoundsPlayersStats {
 interface EventsContextsType {
   statuses: Statuses[];
   roundsPlayersStats: RoundsPlayersStats;
+  averageTime: { mins: number; secs: number };
 }
 
 const EventsContext = React.createContext<EventsContextsType>(

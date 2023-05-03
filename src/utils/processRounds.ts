@@ -77,9 +77,7 @@ function processRounds(matchStart: string[]) {
     if (roundsIndexes.length === 1) roundsIndexes.pop();
   }
 
-  const roundsResult = processTeams(logs, newRoundStatuses);
-
-  return roundsResult;
+  return processTeams(logs, newRoundStatuses);
 }
 
 export default processRounds;

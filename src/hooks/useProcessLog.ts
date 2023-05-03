@@ -8,8 +8,9 @@ const useProcessLog = () => {
 
   if (data) gameEvents.push(...JSON.stringify(data).split('\\r\\n'));
 
-  const { statuses, roundsPlayersStats } = processEvents(gameEvents);
-  return { statuses, roundsPlayersStats, isError, error };
+  const { statuses, roundsPlayersStats, averageTime } =
+    processEvents(gameEvents);
+  return { statuses, roundsPlayersStats, averageTime, isError, error };
 };
 
 export default useProcessLog;
