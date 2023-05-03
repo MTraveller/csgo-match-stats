@@ -1,3 +1,4 @@
+import calcAverageTime from './calcAverageTime';
 import processPlayers from './processPlayers';
 import processRounds from './processRounds';
 import processScores from './processScores';
@@ -22,10 +23,10 @@ function processEvents(matchLog: string[]) {
   );
   const players = processPlayers(matchLog, EventLog.assigned);
   const { logs, statuses } = processRounds(matchStart);
-
+  const averageTime = calcAverageTime({ statuses });
   const roundsPlayersStats = processScores(logs, players);
 
-  return { statuses, roundsPlayersStats };
+  return { statuses, roundsPlayersStats, averageTime };
 }
 
 export default processEvents;

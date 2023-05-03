@@ -10,13 +10,19 @@ import MatchResult from './MatchResult';
 interface ProcessLogs {
   statuses: Statuses[];
   roundsPlayersStats: RoundsPlayersStats;
+  averageTime: { mins: number; secs: number };
   isError: boolean;
   error: Error | null;
 }
 
 function MatchLog() {
-  const { statuses, roundsPlayersStats, isError, error }: ProcessLogs =
-    useProcessLog();
+  const {
+    statuses,
+    roundsPlayersStats,
+    averageTime,
+    isError,
+    error,
+  }: ProcessLogs = useProcessLog();
   const { matchLength, setMatchLength } = useMatchLengthStore();
 
   useEffect(() => {
@@ -27,7 +33,9 @@ function MatchLog() {
   return isError ? (
     <h2>{error?.message}</h2>
   ) : (
-    <EventsContext.Provider value={{ statuses, roundsPlayersStats }}>
+    <EventsContext.Provider
+      value={{ statuses, roundsPlayersStats, averageTime }}
+    >
       <MatchResult />
     </EventsContext.Provider>
   );
